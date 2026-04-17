@@ -101,26 +101,20 @@ def attempt(func: t.Callable[P, T], *args: "P.args", **kwargs: "P.kwargs") -> t.
 
     .. versionadded:: 1.1.0
     """
-    try:
-        ret = func(*args, **kwargs)
-    except Exception as ex:
-        # allow different type reassignment
-        ret = ex  # type: ignore
-
-    return ret
+    pass
 
 
 @t.overload
 def cond(
     pairs: t.List[t.Tuple[t.Callable[P, t.Any], t.Callable[P, T]]],
     *extra_pairs: t.Tuple[t.Callable[P, t.Any], t.Callable[P, T]],
-) -> t.Callable[P, T]: ...
+) -> t.Callable[P, T]: pass
 
 
 @t.overload
 def cond(
     pairs: t.List[t.List[t.Callable[P, t.Any]]], *extra_pairs: t.List[t.Callable[P, t.Any]]
-) -> t.Callable[P, t.Any]: ...
+) -> t.Callable[P, t.Any]: pass
 
 
 def cond(pairs, *extra_pairs):
@@ -152,38 +146,15 @@ def cond(pairs, *extra_pairs):
         Fixed missing argument passing to matched function and added support for passing in a single
         list of pairs instead of just pairs as separate arguments.
     """
-    if extra_pairs:
-        pairs = [pairs] + list(extra_pairs)
-
-    for pair in pairs:
-        is_valid = False
-        try:
-            is_valid = len(pair) == 2
-        except Exception:
-            pass
-
-        if not is_valid:
-            raise ValueError("Each predicate-function pair should contain exactly two elements")
-
-        if not all(map(callable, pair)):
-            raise TypeError("Both predicate-function pair should be callable")
-
-    def _cond(*args):
-        for pair in pairs:
-            predicate, iteratee = pair
-
-            if callit(predicate, *args):
-                return iteratee(*args)
-
-    return _cond
+    pass
 
 
 @t.overload
-def conforms(source: t.Dict[T, t.Callable[[T2], t.Any]]) -> t.Callable[[t.Dict[T, T2]], bool]: ...
+def conforms(source: t.Dict[T, t.Callable[[T2], t.Any]]) -> t.Callable[[t.Dict[T, T2]], bool]: pass
 
 
 @t.overload
-def conforms(source: t.List[t.Callable[[T], t.Any]]) -> t.Callable[[t.List[T]], bool]: ...
+def conforms(source: t.List[t.Callable[[T], t.Any]]) -> t.Callable[[t.List[T]], bool]: pass
 
 
 def conforms(source: t.Union[t.List[t.Any], t.Dict[t.Any, t.Any]]) -> t.Callable[..., t.Any]:
@@ -213,22 +184,15 @@ def conforms(source: t.Union[t.List[t.Any], t.Dict[t.Any, t.Any]]) -> t.Callable
 
     .. versionadded:: 4.0.0
     """
-
-    def _conforms(obj):
-        for key, predicate in iterator(source):
-            if not pyd.has(obj, key) or not predicate(obj[key]):
-                return False
-        return True
-
-    return _conforms
+    pass
 
 
 @t.overload
-def conforms_to(obj: t.Dict[T, T2], source: t.Dict[T, t.Callable[[T2], t.Any]]) -> bool: ...
+def conforms_to(obj: t.Dict[T, T2], source: t.Dict[T, t.Callable[[T2], t.Any]]) -> bool: pass
 
 
 @t.overload
-def conforms_to(obj: t.List[T], source: t.List[t.Callable[[T], t.Any]]) -> bool: ...
+def conforms_to(obj: t.List[T], source: t.List[t.Callable[[T], t.Any]]) -> bool: pass
 
 
 def conforms_to(obj, source):
@@ -253,7 +217,7 @@ def conforms_to(obj, source):
 
     .. versionadded:: 4.0.0
     """
-    return conforms(source)(obj)
+    pass
 
 
 def constant(value: T) -> t.Callable[..., T]:
@@ -277,7 +241,7 @@ def constant(value: T) -> t.Callable[..., T]:
     .. versionchanged:: 4.0.0
         Returned function ignores arguments instead of raising exception.
     """
-    return partial(identity, value)
+    pass
 
 
 def default_to(value: t.Union[T, None], default_value: T2) -> t.Union[T, T2]:
@@ -300,11 +264,11 @@ def default_to(value: t.Union[T, None], default_value: T2) -> t.Union[T, T2]:
 
     .. versionadded:: 4.0.0
     """
-    return default_to_any(value, default_value)
+    pass
 
 
 @t.overload
-def default_to_any(value: None, *default_values: None) -> None: ...
+def default_to_any(value: None, *default_values: None) -> None: pass
 
 
 @t.overload
@@ -312,7 +276,7 @@ def default_to_any(
     value: t.Union[T, None],
     default_value1: None,
     default_value2: T2,
-) -> t.Union[T, T2]: ...
+) -> t.Union[T, T2]: pass
 
 
 @t.overload
@@ -321,7 +285,7 @@ def default_to_any(
     default_value1: None,
     default_value2: None,
     default_value3: T2,
-) -> t.Union[T, T2]: ...
+) -> t.Union[T, T2]: pass
 
 
 @t.overload
@@ -331,7 +295,7 @@ def default_to_any(
     default_value2: None,
     default_value3: None,
     default_value4: T2,
-) -> t.Union[T, T2]: ...
+) -> t.Union[T, T2]: pass
 
 
 @t.overload
@@ -342,11 +306,11 @@ def default_to_any(
     default_value3: None,
     default_value4: None,
     default_value5: T2,
-) -> t.Union[T, T2]: ...
+) -> t.Union[T, T2]: pass
 
 
 @t.overload
-def default_to_any(value: t.Union[T, None], *default_values: T2) -> t.Union[T, T2]: ...
+def default_to_any(value: t.Union[T, None], *default_values: T2) -> t.Union[T, T2]: pass
 
 
 def default_to_any(value, *default_values):
@@ -374,18 +338,15 @@ def default_to_any(value, *default_values):
 
     .. versionadded:: 4.9.0
     """
-    values = (value,) + default_values
-    for val in values:
-        if val is not None:
-            return val
+    pass
 
 
 @t.overload
-def identity(arg: T, *args: t.Any) -> T: ...
+def identity(arg: T, *args: t.Any) -> T: pass
 
 
 @t.overload
-def identity(arg: None = None, *args: t.Any) -> None: ...
+def identity(arg: None = None, *args: t.Any) -> None: pass
 
 
 def identity(arg=None, *args):
@@ -409,15 +370,15 @@ def identity(arg=None, *args):
 
     .. versionadded:: 1.0.0
     """
-    return arg
+    pass
 
 
 @t.overload
-def iteratee(func: t.Callable[P, T]) -> t.Callable[P, T]: ...
+def iteratee(func: t.Callable[P, T]) -> t.Callable[P, T]: pass
 
 
 @t.overload
-def iteratee(func: t.Any) -> t.Callable[..., t.Any]: ...
+def iteratee(func: t.Any) -> t.Callable[..., t.Any]: pass
 
 
 def iteratee(func):
@@ -477,30 +438,7 @@ def iteratee(func):
     .. versionchanged:: 4.1.0
         Return :func:`properties` callback when `func` is a ``tuple``.
     """
-    if callable(func):
-        cbk = func
-    else:
-        if isinstance(func, int):
-            func = str(func)
-
-        if isinstance(func, str):
-            cbk = property_(func)
-        elif isinstance(func, list) and len(func) == 1:
-            cbk = property_(func)
-        elif isinstance(func, list) and len(func) > 1:
-            cbk = matches_property(*func[:2])
-        elif isinstance(func, tuple):
-            cbk = properties(*func)
-        elif isinstance(func, dict):
-            cbk = matches(func)
-        else:
-            cbk = identity
-
-        # Optimize iteratee by specifying the exact number of arguments the iteratee takes so that
-        # arg inspection (costly process) can be skipped in helpers.callit().
-        cbk._argcount = 1
-
-    return cbk
+    pass
 
 
 def matches(source: t.Any) -> t.Callable[[t.Any], bool]:
@@ -530,7 +468,7 @@ def matches(source: t.Any) -> t.Callable[[t.Any], bool]:
     .. versionchanged:: 3.0.0
         Use :func:`pydash.predicates.is_match` as matching function.
     """
-    return lambda obj: pyd.is_match(obj, source)
+    pass
 
 
 def matches_property(key: t.Any, value: t.Any) -> t.Callable[[t.Any], bool]:
@@ -556,8 +494,7 @@ def matches_property(key: t.Any, value: t.Any) -> t.Callable[[t.Any], bool]:
 
     .. versionadded:: 3.1.0
     """
-    prop_accessor = property_(key)
-    return lambda obj: matches(value)(prop_accessor(obj))
+    pass
 
 
 class MemoizedFunc(Protocol[P, T, T2]):
@@ -567,13 +504,13 @@ class MemoizedFunc(Protocol[P, T, T2]):
 
 
 @t.overload
-def memoize(func: t.Callable[P, T], resolver: None = None) -> MemoizedFunc[P, T, str]: ...
+def memoize(func: t.Callable[P, T], resolver: None = None) -> MemoizedFunc[P, T, str]: pass
 
 
 @t.overload
 def memoize(
     func: t.Callable[P, T], resolver: t.Union[t.Callable[P, T2], None] = None
-) -> MemoizedFunc[P, T, T2]: ...
+) -> MemoizedFunc[P, T, T2]: pass
 
 
 def memoize(func, resolver=None):
@@ -604,21 +541,7 @@ def memoize(func, resolver=None):
 
     .. versionadded:: 1.0.0
     """
-
-    def memoized(*args: P.args, **kwargs: P.kwargs):
-        if resolver:
-            key = resolver(*args, **kwargs)
-        else:
-            key = f"{args}{kwargs}"
-
-        if key not in memoized.cache:  # type: ignore
-            memoized.cache[key] = func(*args, **kwargs)  # type:ignore
-
-        return memoized.cache[key]  # type: ignore
-
-    memoized.cache = {}
-
-    return memoized
+    pass
 
 
 def method(path: PathT, *args: t.Any, **kwargs: t.Any) -> t.Callable[..., t.Any]:
@@ -645,12 +568,7 @@ def method(path: PathT, *args: t.Any, **kwargs: t.Any) -> t.Callable[..., t.Any]
 
     .. versionadded:: 3.3.0
     """
-
-    def _method(obj, *_args, **_kwargs):
-        func = pyd.partial(pyd.get(obj, path), *args, **kwargs)
-        return func(*_args, **_kwargs)
-
-    return _method
+    pass
 
 
 def method_of(obj: t.Any, *args: t.Any, **kwargs: t.Any) -> t.Callable[..., t.Any]:
@@ -677,12 +595,7 @@ def method_of(obj: t.Any, *args: t.Any, **kwargs: t.Any) -> t.Callable[..., t.An
 
     .. versionadded:: 3.3.0
     """
-
-    def _method_of(path, *_args, **_kwargs):
-        func = pyd.partial(pyd.get(obj, path), *args, **kwargs)
-        return func(*_args, **_kwargs)
-
-    return _method_of
+    pass
 
 
 def noop(*args: t.Any, **kwargs: t.Any) -> None:  # pylint: disable=unused-argument
@@ -716,16 +629,7 @@ def nth_arg(pos: int = 0) -> t.Callable[..., t.Any]:
 
     .. versionadded:: 4.0.0
     """
-
-    def _nth_arg(*args):
-        try:
-            position = math.ceil(float(pos))
-        except ValueError:
-            position = 0
-
-        return pyd.get(args, position)
-
-    return _nth_arg
+    pass
 
 
 def now() -> int:
@@ -741,9 +645,7 @@ def now() -> int:
     .. versionchanged:: 3.0.0
         Use ``datetime`` module for calculating elapsed time.
     """
-    epoch = datetime.fromtimestamp(0, timezone.utc)
-    delta = datetime.now(timezone.utc) - epoch
-    return int(delta.total_seconds() * 1000)
+    pass
 
 
 def over(funcs: t.Iterable[t.Callable[P, T]]) -> t.Callable[P, t.List[T]]:
@@ -765,11 +667,7 @@ def over(funcs: t.Iterable[t.Callable[P, T]]) -> t.Callable[P, t.List[T]]:
 
     .. versionadded:: 4.0.0
     """
-
-    def _over(*args: P.args, **kwargs: P.kwargs) -> t.List[T]:
-        return [func(*args, **kwargs) for func in funcs]
-
-    return _over
+    pass
 
 
 def over_every(funcs: t.Iterable[t.Callable[P, t.Any]]) -> t.Callable[P, bool]:
@@ -791,11 +689,7 @@ def over_every(funcs: t.Iterable[t.Callable[P, t.Any]]) -> t.Callable[P, bool]:
 
     .. versionadded:: 4.0.0
     """
-
-    def _over_every(*args: P.args, **kwargs: P.kwargs) -> bool:
-        return all(func(*args, **kwargs) for func in funcs)
-
-    return _over_every
+    pass
 
 
 def over_some(funcs: t.Iterable[t.Callable[P, t.Any]]) -> t.Callable[P, bool]:
@@ -817,11 +711,7 @@ def over_some(funcs: t.Iterable[t.Callable[P, t.Any]]) -> t.Callable[P, bool]:
 
     .. versionadded:: 4.0.0
     """
-
-    def _over_some(*args: P.args, **kwargs: P.kwargs) -> bool:
-        return any(func(*args, **kwargs) for func in funcs)
-
-    return _over_some
+    pass
 
 
 def property_(path: PathT) -> t.Callable[[t.Any], t.Any]:
@@ -850,7 +740,7 @@ def property_(path: PathT) -> t.Callable[[t.Any], t.Any]:
     .. versionchanged:: 4.0.1
         Made property accessor work with deep path strings.
     """
-    return lambda obj: pyd.get(obj, path)
+    pass
 
 
 def properties(*paths: t.Any) -> t.Callable[[t.Any], t.Any]:
@@ -871,7 +761,7 @@ def properties(*paths: t.Any) -> t.Callable[[t.Any], t.Any]:
 
     .. versionadded:: 4.1.0
     """
-    return lambda obj: [getter(obj) for getter in (pyd.property_(path) for path in paths)]
+    pass
 
 
 def property_of(obj: t.Any) -> t.Callable[[PathT], t.Any]:
@@ -900,29 +790,29 @@ def property_of(obj: t.Any) -> t.Callable[[PathT], t.Any]:
     .. versionchanged:: 4.0.0
         Removed alias ``prop_of``.
     """
-    return lambda key: pyd.get(obj, key)
+    pass
 
 
 @t.overload
-def random(start: int = 0, stop: int = 1, *, floating: Literal[False] = False) -> int: ...
+def random(start: int = 0, stop: int = 1, *, floating: Literal[False] = False) -> int: pass
 
 
 @t.overload
-def random(start: float, stop: int = 1, floating: bool = False) -> float: ...
+def random(start: float, stop: int = 1, floating: bool = False) -> float: pass
 
 
 @t.overload
-def random(start: int = 0, *, stop: float, floating: bool = False) -> float: ...
+def random(start: int = 0, *, stop: float, floating: bool = False) -> float: pass
 
 
 @t.overload
-def random(start: float, stop: float, floating: bool = False) -> float: ...
+def random(start: float, stop: float, floating: bool = False) -> float: pass
 
 
 @t.overload
 def random(
     start: t.Union[float, int] = 0, stop: t.Union[float, int] = 1, *, floating: Literal[True]
-) -> float: ...
+) -> float: pass
 
 
 def random(start: t.Union[float, int] = 0, stop: t.Union[float, int] = 1, floating: bool = False):
@@ -952,25 +842,15 @@ def random(start: t.Union[float, int] = 0, stop: t.Union[float, int] = 1, floati
 
     .. versionadded:: 1.0.0
     """
-    floating = isinstance(start, float) or isinstance(stop, float) or floating is True
-
-    if stop < start:
-        stop, start = start, stop
-
-    if floating:
-        rnd = uniform(start, stop)
-    else:
-        rnd = randint(start, stop)  # type: ignore
-
-    return rnd
+    pass
 
 
 @t.overload
-def range_(stop: int) -> t.Generator[int, None, None]: ...
+def range_(stop: int) -> t.Generator[int, None, None]: pass
 
 
 @t.overload
-def range_(start: int, stop: int, step: int = 1) -> t.Generator[int, None, None]: ...
+def range_(start: int, stop: int, step: int = 1) -> t.Generator[int, None, None]: pass
 
 
 def range_(*args):
@@ -1009,15 +889,15 @@ def range_(*args):
     .. versionchanged:: 4.0.0
         Support decrementing when start argument is greater than stop argument.
     """
-    return base_range(*args)
+    pass
 
 
 @t.overload
-def range_right(stop: int) -> t.Generator[int, None, None]: ...
+def range_right(stop: int) -> t.Generator[int, None, None]: pass
 
 
 @t.overload
-def range_right(start: int, stop: int, step: int = 1) -> t.Generator[int, None, None]: ...
+def range_right(start: int, stop: int, step: int = 1) -> t.Generator[int, None, None]: pass
 
 
 def range_right(*args):
@@ -1044,20 +924,20 @@ def range_right(*args):
 
     .. versionadded:: 4.0.0
     """
-    return base_range(*args, from_right=True)
+    pass
 
 
 # TODO
 @t.overload
-def result(obj: None, key: t.Any, default: None = None) -> None: ...
+def result(obj: None, key: t.Any, default: None = None) -> None: pass
 
 
 @t.overload
-def result(obj: None, key: t.Any, default: T) -> T: ...
+def result(obj: None, key: t.Any, default: T) -> T: pass
 
 
 @t.overload
-def result(obj: t.Any, key: t.Any, default: t.Any = None) -> t.Any: ...
+def result(obj: t.Any, key: t.Any, default: t.Any = None) -> t.Any: pass
 
 
 def result(obj, key, default=None):
@@ -1090,15 +970,7 @@ def result(obj, key, default=None):
     .. versionchanged:: 2.0.0
         Added ``default`` argument.
     """
-    if not obj:
-        return default
-
-    ret = base_get(obj, key, default=default)
-
-    if callable(ret):
-        ret = ret()
-
-    return ret
+    pass
 
 
 def retry(
@@ -1159,74 +1031,7 @@ def retry(
     ..versionchanged:: 4.5.0
         Added ``jitter`` argument.
     """
-    if not isinstance(attempts, int) or attempts <= 0:
-        raise ValueError("attempts must be an integer greater than 0")
-
-    if not isinstance(delay, NUMBER_TYPES) or delay < 0:
-        raise ValueError("delay must be a number greater than or equal to 0")
-
-    if not isinstance(max_delay, NUMBER_TYPES) or max_delay < 0:
-        raise ValueError("scale must be a number greater than or equal to 0")
-
-    if not isinstance(scale, NUMBER_TYPES) or scale <= 0:
-        raise ValueError("scale must be a number greater than 0")
-
-    if (
-        not isinstance(jitter, NUMBER_TYPES + (tuple,))
-        or (isinstance(jitter, NUMBER_TYPES) and jitter < 0)
-        or (
-            isinstance(jitter, tuple)
-            and (len(jitter) != 2 or not all(isinstance(jit, NUMBER_TYPES) for jit in jitter))
-        )
-    ):
-        raise ValueError("jitter must be a number greater than 0 or a 2-item tuple of numbers")
-
-    if not isinstance(exceptions, tuple) or not all(
-        issubclass(exc, Exception) for exc in exceptions
-    ):
-        raise TypeError("exceptions must be a tuple of Exception types")
-
-    if on_exception and not callable(on_exception):
-        raise TypeError("on_exception must be a callable")
-
-    if jitter and not isinstance(jitter, tuple):
-        jitter = (0, jitter)
-
-    on_exc_argcount = getargcount(on_exception, maxargs=2) if on_exception else None
-
-    def decorator(func):
-        @wraps(func)
-        def decorated(*args, **kwargs):
-            delay_time = delay
-
-            for attempt in range(1, attempts + 1):
-                # pylint: disable=catching-non-exception
-                try:
-                    return func(*args, **kwargs)
-                except exceptions as exc:
-                    if on_exception:
-                        callit(on_exception, exc, attempt, argcount=on_exc_argcount)
-
-                    if attempt == attempts:
-                        raise
-
-                    if jitter:
-                        delay_time += max(0, random(*jitter))
-
-                    if delay_time < 0:  # pragma: no cover
-                        continue
-
-                    if max_delay:
-                        delay_time = min(delay_time, max_delay)
-
-                    time.sleep(delay_time)
-
-                    # Scale after first iteration.
-                    delay_time *= scale
-
-        return decorated
-
-    return decorator
+    pass
 
 
 def stub_list() -> t.List[t.Any]:
@@ -1243,7 +1048,7 @@ def stub_list() -> t.List[t.Any]:
 
     .. versionadded:: 4.0.0
     """
-    return []
+    pass
 
 
 def stub_dict() -> t.Dict[t.Any, t.Any]:
@@ -1260,7 +1065,7 @@ def stub_dict() -> t.Dict[t.Any, t.Any]:
 
     .. versionadded:: 4.0.0
     """
-    return {}
+    pass
 
 
 def stub_false() -> Literal[False]:
@@ -1277,7 +1082,7 @@ def stub_false() -> Literal[False]:
 
     .. versionadded:: 4.0.0
     """
-    return False
+    pass
 
 
 def stub_string() -> str:
@@ -1294,7 +1099,7 @@ def stub_string() -> str:
 
     .. versionadded:: 4.0.0
     """
-    return ""
+    pass
 
 
 def stub_true() -> Literal[True]:
@@ -1311,15 +1116,15 @@ def stub_true() -> Literal[True]:
 
     .. versionadded:: 4.0.0
     """
-    return True
+    pass
 
 
 @t.overload
-def times(n: int, iteratee: t.Callable[..., T]) -> t.List[T]: ...
+def times(n: int, iteratee: t.Callable[..., T]) -> t.List[T]: pass
 
 
 @t.overload
-def times(n: int, iteratee: None = None) -> t.List[int]: ...
+def times(n: int, iteratee: None = None) -> t.List[int]: pass
 
 
 def times(n: int, iteratee=None):
@@ -1349,13 +1154,7 @@ def times(n: int, iteratee=None):
         - Re-reordered arguments to make `iteratee` last argument.
         - Added functionality for handling `iteratee` with zero positional arguments.
     """
-    if iteratee is None:
-        iteratee = identity
-        argcount = 1
-    else:
-        argcount = getargcount(iteratee, maxargs=1)
-
-    return [callit(iteratee, index, argcount=argcount) for index in range(n)]
+    pass
 
 
 def to_path(value: PathT) -> t.List[t.Hashable]:
@@ -1382,8 +1181,7 @@ def to_path(value: PathT) -> t.List[t.Hashable]:
     .. versionchanged:: 4.2.1
         Ensure returned path is always a list.
     """
-    path = [token.key for token in to_path_tokens(value)]
-    return path
+    pass
 
 
 def unique_id(prefix: t.Union[str, None] = None) -> str:
@@ -1407,15 +1205,7 @@ def unique_id(prefix: t.Union[str, None] = None) -> str:
 
     .. versionadded:: 1.0.0
     """
-    # pylint: disable=global-statement
-    global ID_COUNTER  # noqa: PLW0603
-    ID_COUNTER += 1
-
-    if prefix is None:
-        prefix = ""
-    else:
-        prefix = pyd.to_string(prefix)
-    return f"{prefix}{ID_COUNTER}"
+    pass
 
 
 #
@@ -1424,88 +1214,23 @@ def unique_id(prefix: t.Union[str, None] = None) -> str:
 
 
 def _maybe_list_index(key):
-    if isinstance(key, int):
-        return key
-    if pyd.is_string(key) and RE_PATH_LIST_INDEX.match(key):
-        return int(key[1:-1])
-    return None
+    pass
 
 
 def _to_path_token(key) -> PathToken:
-    list_index = _maybe_list_index(key)
-    if list_index is not None:
-        return PathToken(list_index, default_factory=list)
-    return PathToken(
-        unescape_path_key(key) if pyd.is_string(key) else key,
-        default_factory=dict,
-    )
+    pass
 
 
 def to_path_tokens(value) -> t.List[PathToken]:
     """Parse `value` into :class:`PathToken` objects."""
-    if pyd.is_string(value) and ("." in value or "[" in value):
-        # Since we can't tell whether a bare number is supposed to be dict key or a list index, we
-        # support a special syntax where any string-integer surrounded by brackets is treated as a
-        # list index and converted to an integer.
-        keys = [_to_path_token(key) for key in filter(None, RE_PATH_KEY_DELIM.split(value))]
-    elif pyd.is_string(value) or pyd.is_number(value):
-        keys = [PathToken(value, default_factory=dict)]
-    elif value is UNSET:
-        keys = []
-    elif pyd.is_list(value):
-        keys = [_to_path_token(key) for key in value]
-    else:
-        keys = [_to_path_token(value)]
-
-    return keys
+    pass
 
 
 def unescape_path_key(key):
     """Unescape path key."""
-    key = key.replace(r"\\", "\\")
-    key = key.replace(r"\.", r".")
-    return key
+    pass
 
 
 def base_range(*args, **kwargs):
     """Yield range values."""
-    from_right = kwargs.get("from_right", False)
-
-    if len(args) >= 3:
-        args = args[:3]
-    elif len(args) == 2:
-        args = (args[0], args[1], None)
-    elif len(args) == 1:
-        args = (0, args[0], None)
-
-    if args and args[2] is None:
-        check_args = args[:2]
-    else:
-        check_args = args
-
-    for arg in check_args:
-        if not isinstance(arg, int):  # pragma: no cover
-            raise TypeError(f"range cannot interpret {type(arg).__name__!r} object as an integer")
-
-    def gen():
-        if not args:
-            return
-
-        start, stop, step = args
-
-        if step is None:
-            step = 1 if start < stop else -1
-
-        length = int(max([math.ceil((stop - start) / (step or 1)), 0]))
-
-        if from_right:
-            start += (step * length) - step
-            step *= -1
-
-        while length:
-            yield start
-
-            start += step
-            length -= 1
-
-    return gen()
+    pass

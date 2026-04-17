@@ -35,7 +35,7 @@ class Chain(AllFuncs, t.Generic[ValueT_co]):
 
     def _wrap(self, func) -> "ChainWrapper[t.Union[ValueT_co, Unset]]":
         """Implement `AllFuncs` interface."""
-        return ChainWrapper(self._value, func)
+        pass
 
     def value(self) -> ValueT_co:
         """
@@ -44,7 +44,7 @@ class Chain(AllFuncs, t.Generic[ValueT_co]):
         Returns:
             Current value of chain operations.
         """
-        return self(self._value)
+        pass
 
     def to_string(self) -> str:
         """
@@ -53,7 +53,7 @@ class Chain(AllFuncs, t.Generic[ValueT_co]):
         Returns:
             Current value of chain operations casted to ``str``.
         """
-        return self.module.to_string(self.value())
+        pass
 
     def commit(self) -> "Chain[ValueT_co]":
         """
@@ -63,7 +63,7 @@ class Chain(AllFuncs, t.Generic[ValueT_co]):
             New instance of :class:`Chain` with resolved value from
                 previous :class:`Class`.
         """
-        return Chain(self.value())
+        pass
 
     def plant(self, value: t.Any) -> "Chain[ValueT_co]":
         """
@@ -72,26 +72,7 @@ class Chain(AllFuncs, t.Generic[ValueT_co]):
         Args:
             value: Value to plant as the initial chain value.
         """
-        # pylint: disable=no-member,maybe-no-member
-        wrapper = self._value
-        wrappers = []
-
-        if hasattr(wrapper, "_value"):
-            wrappers = [wrapper]
-
-            while isinstance(wrapper._value, ChainWrapper):
-                wrapper = wrapper._value  # type: ignore
-                wrappers.insert(0, wrapper)
-
-        clone: Chain[t.Any] = Chain(value)
-
-        for wrap in wrappers:
-            clone = ChainWrapper(clone._value, wrap.method)(  # type: ignore
-                *wrap.args,  # type: ignore
-                **wrap.kwargs,  # type: ignore
-            )
-
-        return clone
+        pass
 
     def __call__(self, value) -> ValueT_co:
         """
@@ -120,10 +101,7 @@ class ChainWrapper(t.Generic[ValueT_co]):
 
     def _generate(self):
         """Generate a copy of this instance."""
-        # pylint: disable=attribute-defined-outside-init
-        new = self.__class__.__new__(self.__class__)
-        new.__dict__ = self.__dict__.copy()
-        return new
+        pass
 
     def unwrap(self, value=UNSET):
         """
@@ -132,24 +110,7 @@ class ChainWrapper(t.Generic[ValueT_co]):
         If :attr:`_value` is an instance of :class:`ChainWrapper`, then unwrap it before calling
         :attr:`method`.
         """
-        # Generate a copy of ourself so that we don't modify the chain wrapper
-        # _value directly. This way if we are late passing a value, we don't
-        # "freeze" the chain wrapper value when a value is first passed.
-        # Otherwise, we'd locked the chain wrapper value permanently and not be
-        # able to reuse it.
-        wrapper = self._generate()
-
-        if isinstance(wrapper._value, ChainWrapper):
-            # pylint: disable=no-member,maybe-no-member
-            wrapper._value = wrapper._value.unwrap(value)
-        elif not isinstance(value, ChainWrapper) and value is not UNSET:
-            # Override wrapper's initial value.
-            wrapper._value = value
-
-        if wrapper._value is not UNSET:
-            value = wrapper._value
-
-        return wrapper.method(value, *wrapper.args, **wrapper.kwargs)
+        pass
 
     def __call__(self, *args, **kwargs):
         """
@@ -232,7 +193,7 @@ def chain(value: t.Union[T, Unset] = UNSET) -> Chain[T]:
         - Added :meth:`Chain.commit` for returning a new :class:`Chain` instance initialized with
           the results from calling :meth:`Chain.value`.
     """
-    return Chain(value)
+    pass
 
 
 def tap(value: T, interceptor: t.Callable[[T], t.Any]) -> T:
@@ -260,5 +221,4 @@ def tap(value: T, interceptor: t.Callable[[T], t.Any]) -> T:
 
     .. versionadded:: 1.0.0
     """
-    interceptor(value)
-    return value
+    pass

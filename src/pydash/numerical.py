@@ -59,11 +59,11 @@ INFINITY = float("inf")
 
 
 @t.overload
-def add(a: "SupportsAdd[T, T2]", b: T) -> T2: ...
+def add(a: "SupportsAdd[T, T2]", b: T) -> T2: pass
 
 
 @t.overload
-def add(a: T, b: "SupportsAdd[T, T2]") -> T2: ...
+def add(a: T, b: "SupportsAdd[T, T2]") -> T2: pass
 
 
 def add(a, b):
@@ -90,15 +90,15 @@ def add(a, b):
     .. versionchanged:: 4.0.0
         Only support two argument addition.
     """
-    return a + b
+    pass
 
 
 @t.overload
-def sum_(collection: t.Mapping[t.Any, "SupportsAdd[int, T]"]) -> T: ...
+def sum_(collection: t.Mapping[t.Any, "SupportsAdd[int, T]"]) -> T: pass
 
 
 @t.overload
-def sum_(collection: t.Iterable["SupportsAdd[int, T]"]) -> T: ...
+def sum_(collection: t.Iterable["SupportsAdd[int, T]"]) -> T: pass
 
 
 def sum_(collection):
@@ -125,50 +125,50 @@ def sum_(collection):
         Move iteratee support to :func:`sum_by`. Move two argument addition to
         :func:`add`.
     """
-    return sum_by(collection)
+    pass
 
 
 @t.overload
 def sum_by(
     collection: t.Mapping[T, T2],
     iteratee: t.Callable[[T2, T, t.Dict[T, T2]], "SupportsAdd[int, T3]"],
-) -> T3: ...
+) -> T3: pass
 
 
 @t.overload
 def sum_by(
     collection: t.Mapping[T, T2], iteratee: t.Callable[[T2, T], "SupportsAdd[int, T3]"]
-) -> T3: ...
+) -> T3: pass
 
 
 @t.overload
 def sum_by(
     collection: t.Mapping[t.Any, T2], iteratee: t.Callable[[T2], "SupportsAdd[int, T3]"]
-) -> T3: ...
+) -> T3: pass
 
 
 @t.overload
 def sum_by(
     collection: t.Iterable[T], iteratee: t.Callable[[T, int, t.List[T]], "SupportsAdd[int, T2]"]
-) -> T2: ...
+) -> T2: pass
 
 
 @t.overload
 def sum_by(
     collection: t.Iterable[T], iteratee: t.Callable[[T, int], "SupportsAdd[int, T2]"]
-) -> T2: ...
+) -> T2: pass
 
 
 @t.overload
-def sum_by(collection: t.Iterable[T], iteratee: t.Callable[[T], "SupportsAdd[int, T2]"]) -> T2: ...
+def sum_by(collection: t.Iterable[T], iteratee: t.Callable[[T], "SupportsAdd[int, T2]"]) -> T2: pass
 
 
 @t.overload
-def sum_by(collection: t.Mapping[t.Any, "SupportsAdd[int, T]"], iteratee: None = None) -> T: ...
+def sum_by(collection: t.Mapping[t.Any, "SupportsAdd[int, T]"], iteratee: None = None) -> T: pass
 
 
 @t.overload
-def sum_by(collection: t.Iterable["SupportsAdd[int, T]"], iteratee: None = None) -> T: ...
+def sum_by(collection: t.Iterable["SupportsAdd[int, T]"], iteratee: None = None) -> T: pass
 
 
 def sum_by(collection, iteratee=None):
@@ -190,15 +190,15 @@ def sum_by(collection, iteratee=None):
 
     .. versionadded:: 4.0.0
     """
-    return sum(result[0] for result in iteriteratee(collection, iteratee))
+    pass
 
 
 @t.overload
-def mean(collection: t.Mapping[t.Any, "SupportsAdd[int, t.Any]"]) -> float: ...
+def mean(collection: t.Mapping[t.Any, "SupportsAdd[int, t.Any]"]) -> float: pass
 
 
 @t.overload
-def mean(collection: t.Iterable["SupportsAdd[int, t.Any]"]) -> float: ...
+def mean(collection: t.Iterable["SupportsAdd[int, t.Any]"]) -> float: pass
 
 
 def mean(collection):
@@ -223,54 +223,54 @@ def mean(collection):
         - Removed ``average`` and ``avg`` aliases.
         - Moved iteratee functionality to :func:`mean_by`.
     """
-    return mean_by(collection)
+    pass
 
 
 @t.overload
 def mean_by(
     collection: t.Mapping[T, T2],
     iteratee: t.Callable[[T2, T, t.Dict[T, T2]], "SupportsAdd[int, t.Any]"],
-) -> float: ...
+) -> float: pass
 
 
 @t.overload
 def mean_by(
     collection: t.Mapping[T, T2], iteratee: t.Callable[[T2, T], "SupportsAdd[int, t.Any]"]
-) -> float: ...
+) -> float: pass
 
 
 @t.overload
 def mean_by(
     collection: t.Mapping[t.Any, T2], iteratee: t.Callable[[T2], "SupportsAdd[int, t.Any]"]
-) -> float: ...
+) -> float: pass
 
 
 @t.overload
 def mean_by(
     collection: t.Iterable[T], iteratee: t.Callable[[T, int, t.List[T]], "SupportsAdd[int, t.Any]"]
-) -> float: ...
+) -> float: pass
 
 
 @t.overload
 def mean_by(
     collection: t.Iterable[T], iteratee: t.Callable[[T, int], "SupportsAdd[int, t.Any]"]
-) -> float: ...
+) -> float: pass
 
 
 @t.overload
 def mean_by(
     collection: t.Iterable[T], iteratee: t.Callable[[T], "SupportsAdd[int, t.Any]"]
-) -> float: ...
+) -> float: pass
 
 
 @t.overload
 def mean_by(
     collection: t.Mapping[t.Any, "SupportsAdd[int, t.Any]"], iteratee: None = None
-) -> float: ...
+) -> float: pass
 
 
 @t.overload
-def mean_by(collection: t.Iterable["SupportsAdd[int, t.Any]"], iteratee: None = None) -> float: ...
+def mean_by(collection: t.Iterable["SupportsAdd[int, t.Any]"], iteratee: None = None) -> float: pass
 
 
 def mean_by(collection, iteratee=None):
@@ -292,7 +292,7 @@ def mean_by(collection, iteratee=None):
 
     .. versionadded:: 4.0.0
     """
-    return sum_by(collection, iteratee) / len(collection)
+    pass
 
 
 def ceil(x: NumberT, precision: int = 0) -> float:
@@ -317,7 +317,7 @@ def ceil(x: NumberT, precision: int = 0) -> float:
 
     .. versionadded:: 3.3.0
     """
-    return rounder(math.ceil, x, precision)
+    pass
 
 
 NumT = t.TypeVar("NumT", int, float, "Decimal")
@@ -350,16 +350,7 @@ def clamp(x: NumT, lower: NumT2, upper: t.Union[NumT3, None] = None) -> t.Union[
 
     .. versionadded:: 4.0.0
     """
-    if upper is None:
-        upper = lower  # type: ignore
-        lower = x  # type: ignore
-
-    if x < lower:
-        x = lower  # type: ignore
-    elif x > upper:  # type: ignore
-        x = upper  # type: ignore
-
-    return x
+    pass
 
 
 def divide(dividend: t.Union[NumberT, None], divisor: t.Union[NumberT, None]) -> float:
@@ -386,7 +377,7 @@ def divide(dividend: t.Union[NumberT, None], divisor: t.Union[NumberT, None]) ->
 
     .. versionadded:: 4.0.0
     """
-    return call_math_operator(dividend, divisor, operator.truediv, 1)
+    pass
 
 
 def floor(x: NumberT, precision: int = 0) -> float:
@@ -411,31 +402,31 @@ def floor(x: NumberT, precision: int = 0) -> float:
 
     .. versionadded:: 3.3.0
     """
-    return rounder(math.floor, x, precision)
+    pass
 
 
 @t.overload
 def max_(
     collection: t.Mapping[t.Any, "SupportsRichComparisonT"], default: Unset = UNSET
-) -> "SupportsRichComparisonT": ...
+) -> "SupportsRichComparisonT": pass
 
 
 @t.overload
 def max_(
     collection: t.Mapping[t.Any, "SupportsRichComparisonT"], default: T
-) -> t.Union["SupportsRichComparisonT", T]: ...
+) -> t.Union["SupportsRichComparisonT", T]: pass
 
 
 @t.overload
 def max_(
     collection: t.Iterable["SupportsRichComparisonT"], default: Unset = UNSET
-) -> "SupportsRichComparisonT": ...
+) -> "SupportsRichComparisonT": pass
 
 
 @t.overload
 def max_(
     collection: t.Iterable["SupportsRichComparisonT"], default: T
-) -> t.Union["SupportsRichComparisonT", T]: ...
+) -> t.Union["SupportsRichComparisonT", T]: pass
 
 
 def max_(collection, default=UNSET):
@@ -461,7 +452,7 @@ def max_(collection, default=UNSET):
     .. versionchanged:: 4.0.0
         Moved iteratee iteratee support to :func:`max_by`.
     """
-    return max_by(collection, default=default)
+    pass
 
 
 @t.overload
@@ -469,7 +460,7 @@ def max_by(
     collection: t.Mapping[t.Any, "SupportsRichComparisonT"],
     iteratee: None = None,
     default: Unset = UNSET,
-) -> "SupportsRichComparisonT": ...
+) -> "SupportsRichComparisonT": pass
 
 
 @t.overload
@@ -477,7 +468,7 @@ def max_by(
     collection: t.Mapping[t.Any, T2],
     iteratee: t.Callable[[T2], "SupportsRichComparisonT"],
     default: Unset = UNSET,
-) -> T2: ...
+) -> T2: pass
 
 
 @t.overload
@@ -486,19 +477,19 @@ def max_by(
     iteratee: t.Callable[[T2], "SupportsRichComparisonT"],
     *,
     default: T,
-) -> t.Union[T2, T]: ...
+) -> t.Union[T2, T]: pass
 
 
 @t.overload
 def max_by(
     collection: t.Mapping[t.Any, "SupportsRichComparisonT"], iteratee: None = None, *, default: T
-) -> t.Union["SupportsRichComparisonT", T]: ...
+) -> t.Union["SupportsRichComparisonT", T]: pass
 
 
 @t.overload
 def max_by(
     collection: t.Iterable["SupportsRichComparisonT"], iteratee: None = None, default: Unset = UNSET
-) -> "SupportsRichComparisonT": ...
+) -> "SupportsRichComparisonT": pass
 
 
 @t.overload
@@ -506,27 +497,27 @@ def max_by(
     collection: t.Iterable[T2],
     iteratee: t.Callable[[T2], "SupportsRichComparisonT"],
     default: Unset = UNSET,
-) -> T2: ...
+) -> T2: pass
 
 
 @t.overload
 def max_by(
     collection: t.Iterable[T2], iteratee: t.Callable[[T2], "SupportsRichComparisonT"], *, default: T
-) -> t.Union[T2, T]: ...
+) -> t.Union[T2, T]: pass
 
 
 @t.overload
 def max_by(
     collection: t.Iterable["SupportsRichComparisonT"], iteratee: None = None, *, default: T
-) -> t.Union["SupportsRichComparisonT", T]: ...
+) -> t.Union["SupportsRichComparisonT", T]: pass
 
 
 @t.overload
-def max_by(collection: t.Iterable[T], iteratee: IterateeObjT, default: Unset = UNSET) -> T: ...
+def max_by(collection: t.Iterable[T], iteratee: IterateeObjT, default: Unset = UNSET) -> T: pass
 
 
 @t.overload
-def max_by(collection: t.Iterable[T], iteratee: IterateeObjT, default: T2) -> t.Union[T, T2]: ...
+def max_by(collection: t.Iterable[T], iteratee: IterateeObjT, default: T2) -> t.Union[T, T2]: pass
 
 
 def max_by(collection, iteratee=None, default=UNSET):
@@ -552,50 +543,47 @@ def max_by(collection, iteratee=None, default=UNSET):
 
     .. versionadded:: 4.0.0
     """
-    if isinstance(collection, dict):
-        collection = collection.values()
-
-    return max(iterator_with_default(collection, default), key=pyd.iteratee(iteratee))
+    pass
 
 
 @t.overload
 def median(
     collection: t.Mapping[T, T2], iteratee: t.Callable[[T2, T, t.Dict[T, T2]], NumberT]
-) -> t.Union[float, int]: ...
+) -> t.Union[float, int]: pass
 
 
 @t.overload
 def median(
     collection: t.Mapping[T, T2], iteratee: t.Callable[[T2, T], NumberT]
-) -> t.Union[float, int]: ...
+) -> t.Union[float, int]: pass
 
 
 @t.overload
 def median(
     collection: t.Mapping[t.Any, T2], iteratee: t.Callable[[T2], NumberT]
-) -> t.Union[float, int]: ...
+) -> t.Union[float, int]: pass
 
 
 @t.overload
 def median(
     collection: t.Iterable[T], iteratee: t.Callable[[T, int, t.List[T]], NumberT]
-) -> t.Union[float, int]: ...
+) -> t.Union[float, int]: pass
 
 
 @t.overload
 def median(
     collection: t.Iterable[T], iteratee: t.Callable[[T, int], NumberT]
-) -> t.Union[float, int]: ...
+) -> t.Union[float, int]: pass
 
 
 @t.overload
 def median(
     collection: t.Iterable[T], iteratee: t.Callable[[T], NumberT]
-) -> t.Union[float, int]: ...
+) -> t.Union[float, int]: pass
 
 
 @t.overload
-def median(collection: t.Iterable[NumberT], iteratee: None = None) -> t.Union[float, int]: ...
+def median(collection: t.Iterable[NumberT], iteratee: None = None) -> t.Union[float, int]: pass
 
 
 def median(collection, iteratee=None):
@@ -619,42 +607,31 @@ def median(collection, iteratee=None):
 
     .. versionadded:: 2.1.0
     """
-    length = len(collection)
-    middle = (length + 1) / 2
-    collection = sorted(ret[0] for ret in iteriteratee(collection, iteratee))
-
-    if pyd.is_odd(length):
-        result = collection[int(middle - 1)]
-    else:
-        left = int(middle - 1.5)
-        right = int(middle - 0.5)
-        result = (collection[left] + collection[right]) / 2
-
-    return result
+    pass
 
 
 @t.overload
 def min_(
     collection: t.Mapping[t.Any, "SupportsRichComparisonT"], default: Unset = UNSET
-) -> "SupportsRichComparisonT": ...
+) -> "SupportsRichComparisonT": pass
 
 
 @t.overload
 def min_(
     collection: t.Mapping[t.Any, "SupportsRichComparisonT"], default: T
-) -> t.Union["SupportsRichComparisonT", T]: ...
+) -> t.Union["SupportsRichComparisonT", T]: pass
 
 
 @t.overload
 def min_(
     collection: t.Iterable["SupportsRichComparisonT"], default: Unset = UNSET
-) -> "SupportsRichComparisonT": ...
+) -> "SupportsRichComparisonT": pass
 
 
 @t.overload
 def min_(
     collection: t.Iterable["SupportsRichComparisonT"], default: T
-) -> t.Union["SupportsRichComparisonT", T]: ...
+) -> t.Union["SupportsRichComparisonT", T]: pass
 
 
 def min_(collection, default=UNSET):
@@ -680,7 +657,7 @@ def min_(collection, default=UNSET):
     .. versionchanged:: 4.0.0
         Moved iteratee iteratee support to :func:`min_by`.
     """
-    return min_by(collection, default=default)
+    pass
 
 
 @t.overload
@@ -688,7 +665,7 @@ def min_by(
     collection: t.Mapping[t.Any, "SupportsRichComparisonT"],
     iteratee: None = None,
     default: Unset = UNSET,
-) -> "SupportsRichComparisonT": ...
+) -> "SupportsRichComparisonT": pass
 
 
 @t.overload
@@ -696,7 +673,7 @@ def min_by(
     collection: t.Mapping[t.Any, T2],
     iteratee: t.Callable[[T2], "SupportsRichComparisonT"],
     default: Unset = UNSET,
-) -> T2: ...
+) -> T2: pass
 
 
 @t.overload
@@ -705,19 +682,19 @@ def min_by(
     iteratee: t.Callable[[T2], "SupportsRichComparisonT"],
     *,
     default: T,
-) -> t.Union[T2, T]: ...
+) -> t.Union[T2, T]: pass
 
 
 @t.overload
 def min_by(
     collection: t.Mapping[t.Any, "SupportsRichComparisonT"], iteratee: None = None, *, default: T
-) -> t.Union["SupportsRichComparisonT", T]: ...
+) -> t.Union["SupportsRichComparisonT", T]: pass
 
 
 @t.overload
 def min_by(
     collection: t.Iterable["SupportsRichComparisonT"], iteratee: None = None, default: Unset = UNSET
-) -> "SupportsRichComparisonT": ...
+) -> "SupportsRichComparisonT": pass
 
 
 @t.overload
@@ -725,27 +702,27 @@ def min_by(
     collection: t.Iterable[T2],
     iteratee: t.Callable[[T2], "SupportsRichComparisonT"],
     default: Unset = UNSET,
-) -> T2: ...
+) -> T2: pass
 
 
 @t.overload
 def min_by(
     collection: t.Iterable[T2], iteratee: t.Callable[[T2], "SupportsRichComparisonT"], *, default: T
-) -> t.Union[T2, T]: ...
+) -> t.Union[T2, T]: pass
 
 
 @t.overload
 def min_by(
     collection: t.Iterable["SupportsRichComparisonT"], iteratee: None = None, *, default: T
-) -> t.Union["SupportsRichComparisonT", T]: ...
+) -> t.Union["SupportsRichComparisonT", T]: pass
 
 
 @t.overload
-def min_by(collection: t.Iterable[T], iteratee: IterateeObjT, default: Unset = UNSET) -> T: ...
+def min_by(collection: t.Iterable[T], iteratee: IterateeObjT, default: Unset = UNSET) -> T: pass
 
 
 @t.overload
-def min_by(collection: t.Iterable[T], iteratee: IterateeObjT, default: T2) -> t.Union[T, T2]: ...
+def min_by(collection: t.Iterable[T], iteratee: IterateeObjT, default: T2) -> t.Union[T, T2]: pass
 
 
 def min_by(collection, iteratee=None, default=UNSET):
@@ -771,9 +748,7 @@ def min_by(collection, iteratee=None, default=UNSET):
 
     .. versionadded:: 4.0.0
     """
-    if isinstance(collection, dict):
-        collection = collection.values()
-    return min(iterator_with_default(collection, default), key=pyd.iteratee(iteratee))
+    pass
 
 
 def moving_mean(array: t.Sequence["SupportsAdd[int, t.Any]"], size: t.SupportsInt) -> t.List[float]:
@@ -801,36 +776,27 @@ def moving_mean(array: t.Sequence["SupportsAdd[int, t.Any]"], size: t.SupportsIn
     .. versionchanged:: 4.0.0
         Rename to ``moving_mean`` and remove ``moving_average`` and ``moving_avg`` aliases.
     """
-    result = []
-    size = int(size)
-
-    for i in range(size - 1, len(array) + 1):
-        window = array[i - size : i]
-
-        if len(window) == size:
-            result.append(mean(window))
-
-    return result
+    pass
 
 
 @t.overload
-def multiply(multiplier: SupportsMul[int, T2], multiplicand: None) -> T2: ...
+def multiply(multiplier: SupportsMul[int, T2], multiplicand: None) -> T2: pass
 
 
 @t.overload
-def multiply(multiplier: None, multiplicand: SupportsMul[int, T2]) -> T2: ...
+def multiply(multiplier: None, multiplicand: SupportsMul[int, T2]) -> T2: pass
 
 
 @t.overload
-def multiply(multiplier: None, multiplicand: None) -> int: ...
+def multiply(multiplier: None, multiplicand: None) -> int: pass
 
 
 @t.overload
-def multiply(multiplier: SupportsMul[T, T2], multiplicand: T) -> T2: ...
+def multiply(multiplier: SupportsMul[T, T2], multiplicand: T) -> T2: pass
 
 
 @t.overload
-def multiply(multiplier: T, multiplicand: SupportsMul[T, T2]) -> T2: ...
+def multiply(multiplier: T, multiplicand: SupportsMul[T, T2]) -> T2: pass
 
 
 def multiply(multiplier, multiplicand):
@@ -857,23 +823,23 @@ def multiply(multiplier, multiplicand):
 
     .. versionadded:: 4.0.0
     """
-    return call_math_operator(multiplier, multiplicand, operator.mul, 1)
+    pass
 
 
 @t.overload
-def power(x: int, n: int) -> t.Union[int, float]: ...
+def power(x: int, n: int) -> t.Union[int, float]: pass
 
 
 @t.overload
-def power(x: float, n: t.Union[int, float]) -> float: ...
+def power(x: float, n: t.Union[int, float]) -> float: pass
 
 
 @t.overload
-def power(x: t.List[int], n: int) -> t.List[t.Union[int, float]]: ...
+def power(x: t.List[int], n: int) -> t.List[t.Union[int, float]]: pass
 
 
 @t.overload
-def power(x: t.List[float], n: t.List[t.Union[int, float]]) -> t.List[float]: ...
+def power(x: t.List[float], n: t.List[t.Union[int, float]]) -> t.List[float]: pass
 
 
 def power(x, n):
@@ -899,22 +865,15 @@ def power(x, n):
     .. versionchanged:: 4.0.0
         Removed alias ``pow_``.
     """
-    if pyd.is_number(x):
-        result = pow(x, n)
-    elif pyd.is_list(x):
-        result = [pow(item, n) for item in x]
-    else:
-        result = None
-
-    return result
+    pass
 
 
 @t.overload
-def round_(x: t.List[SupportsRound[NumberT]], precision: int = 0) -> t.List[float]: ...
+def round_(x: t.List[SupportsRound[NumberT]], precision: int = 0) -> t.List[float]: pass
 
 
 @t.overload
-def round_(x: SupportsRound[NumberT], precision: int = 0) -> float: ...
+def round_(x: SupportsRound[NumberT], precision: int = 0) -> float: pass
 
 
 def round_(x, precision=0):
@@ -940,19 +899,19 @@ def round_(x, precision=0):
     .. versionchanged:: 4.0.0
         Remove alias ``curve``.
     """
-    return rounder(round, x, precision)
+    pass
 
 
 @t.overload
-def scale(array: t.Iterable["Decimal"], maximum: "Decimal") -> t.List["Decimal"]: ...
+def scale(array: t.Iterable["Decimal"], maximum: "Decimal") -> t.List["Decimal"]: pass
 
 
 @t.overload
-def scale(array: t.Iterable[NumberNoDecimalT], maximum: NumberNoDecimalT) -> t.List[float]: ...
+def scale(array: t.Iterable[NumberNoDecimalT], maximum: NumberNoDecimalT) -> t.List[float]: pass
 
 
 @t.overload
-def scale(array: t.Iterable[NumberT], maximum: int = 1) -> t.List[float]: ...
+def scale(array: t.Iterable[NumberT], maximum: int = 1) -> t.List[float]: pass
 
 
 def scale(array, maximum: NumberT = 1):
@@ -979,23 +938,21 @@ def scale(array, maximum: NumberT = 1):
 
     .. versionadded:: 2.1.0
     """
-    array_max = max(array)
-    factor = maximum / array_max
-    return [item * factor for item in array]
+    pass
 
 
 @t.overload
 def slope(
     point1: t.Union[t.Tuple["Decimal", "Decimal"], t.List["Decimal"]],
     point2: t.Union[t.Tuple["Decimal", "Decimal"], t.List["Decimal"]],
-) -> "Decimal": ...
+) -> "Decimal": pass
 
 
 @t.overload
 def slope(
     point1: t.Union[t.Tuple[NumberNoDecimalT, NumberNoDecimalT], t.List[NumberNoDecimalT]],
     point2: t.Union[t.Tuple[NumberNoDecimalT, NumberNoDecimalT], t.List[NumberNoDecimalT]],
-) -> float: ...
+) -> float: pass
 
 
 def slope(point1, point2):
@@ -1016,15 +973,7 @@ def slope(point1, point2):
 
     .. versionadded:: 2.1.0
     """
-    x1, y1 = point1[0], point1[1]
-    x2, y2 = point2[0], point2[1]
-
-    if x1 == x2:
-        result = INFINITY
-    else:
-        result = (y2 - y1) / (x2 - x1)
-
-    return result
+    pass
 
 
 def std_deviation(array: t.List[NumberT]) -> float:
@@ -1047,15 +996,15 @@ def std_deviation(array: t.List[NumberT]) -> float:
     .. versionchanged:: 4.0.0
         Remove alias ``sigma``.
     """
-    return math.sqrt(variance(array))
+    pass
 
 
 @t.overload
-def subtract(minuend: "SupportsSub[T, T2]", subtrahend: T) -> T2: ...
+def subtract(minuend: "SupportsSub[T, T2]", subtrahend: T) -> T2: pass
 
 
 @t.overload
-def subtract(minuend: T, subtrahend: "SupportsSub[T, T2]") -> T2: ...
+def subtract(minuend: T, subtrahend: "SupportsSub[T, T2]") -> T2: pass
 
 
 def subtract(minuend, subtrahend):
@@ -1080,7 +1029,7 @@ def subtract(minuend, subtrahend):
 
     .. versionadded:: 4.0.0
     """
-    return call_math_operator(minuend, subtrahend, operator.sub, 0)
+    pass
 
 
 def transpose(array: t.Iterable[t.Iterable[T]]) -> t.List[t.List[T]]:
@@ -1100,21 +1049,15 @@ def transpose(array: t.Iterable[t.Iterable[T]]) -> t.List[t.List[T]]:
 
     .. versionadded:: 2.1.0
     """
-    trans: t.List[t.List[T]] = []
-
-    for y, row in iterator(array):
-        for x, col in iterator(row):
-            trans = pyd.set_(trans, [x, y], col)
-
-    return trans
+    pass
 
 
 @t.overload
-def variance(array: t.Mapping[t.Any, "SupportsAdd[int, t.Any]"]) -> float: ...
+def variance(array: t.Mapping[t.Any, "SupportsAdd[int, t.Any]"]) -> float: pass
 
 
 @t.overload
-def variance(array: t.Iterable["SupportsAdd[int, t.Any]"]) -> float: ...
+def variance(array: t.Iterable["SupportsAdd[int, t.Any]"]) -> float: pass
 
 
 def variance(array):
@@ -1134,48 +1077,43 @@ def variance(array):
 
     .. versionadded:: 2.1.0
     """
-    avg = mean(array)
-
-    def var(x):
-        return power(x - avg, 2)
-
-    return pyd._(array).map_(var).mean().value()
+    pass
 
 
 @t.overload
 def zscore(
     collection: t.Mapping[T, T2], iteratee: t.Callable[[T2, T, t.Dict[T, T2]], NumberT]
-) -> t.List[float]: ...
+) -> t.List[float]: pass
 
 
 @t.overload
 def zscore(
     collection: t.Mapping[T, T2], iteratee: t.Callable[[T2, T], NumberT]
-) -> t.List[float]: ...
+) -> t.List[float]: pass
 
 
 @t.overload
 def zscore(
     collection: t.Mapping[t.Any, T2], iteratee: t.Callable[[T2], NumberT]
-) -> t.List[float]: ...
+) -> t.List[float]: pass
 
 
 @t.overload
 def zscore(
     collection: t.Iterable[T], iteratee: t.Callable[[T, int, t.List[T]], NumberT]
-) -> t.List[float]: ...
+) -> t.List[float]: pass
 
 
 @t.overload
-def zscore(collection: t.Iterable[T], iteratee: t.Callable[[T, int], NumberT]) -> t.List[float]: ...
+def zscore(collection: t.Iterable[T], iteratee: t.Callable[[T, int], NumberT]) -> t.List[float]: pass
 
 
 @t.overload
-def zscore(collection: t.Iterable[T], iteratee: t.Callable[[T], NumberT]) -> t.List[float]: ...
+def zscore(collection: t.Iterable[T], iteratee: t.Callable[[T], NumberT]) -> t.List[float]: pass
 
 
 @t.overload
-def zscore(collection: t.Iterable[NumberT], iteratee: None = None) -> t.List[float]: ...
+def zscore(collection: t.Iterable[NumberT], iteratee: None = None) -> t.List[float]: pass
 
 
 def zscore(collection, iteratee=None):
@@ -1198,11 +1136,7 @@ def zscore(collection, iteratee=None):
 
     .. versionadded:: 2.1.0
     """
-    array = pyd.map_(collection, iteratee)
-    avg = mean(array)
-    sig = std_deviation(array)
-
-    return [(item - avg) / sig for item in array]
+    pass
 
 
 #
@@ -1212,41 +1146,8 @@ def zscore(collection, iteratee=None):
 
 def call_math_operator(value1, value2, op, default):
     """Return the result of the math operation on the given values."""
-    if value1 is None:
-        value1 = default
-
-    if value2 is None:
-        value2 = default
-
-    if not pyd.is_number(value1):
-        try:
-            value1 = float(value1)
-        except Exception:
-            pass
-
-    if not pyd.is_number(value2):
-        try:
-            value2 = float(value2)
-        except Exception:
-            pass
-
-    return op(value1, value2)
+    pass
 
 
 def rounder(func, x, precision):
-    precision = pow(10, precision)
-
-    def rounder_func(item):
-        return func(item * precision) / precision
-
-    result = None
-
-    if pyd.is_number(x):
-        result = rounder_func(x)
-    elif pyd.is_iterable(x):
-        try:
-            result = [rounder_func(item) for item in x]
-        except TypeError:
-            pass
-
-    return result
+    pass

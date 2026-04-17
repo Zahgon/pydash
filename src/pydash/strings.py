@@ -111,20 +111,11 @@ class JSRegExp:
 
     def find(self, text: str) -> t.List[str]:
         """Return list of regular expression matches."""
-        if self._global:
-            results = self.pattern.findall(text)
-        else:
-            res = self.pattern.search(text)
-            if res:
-                results = [res.group()]
-            else:
-                results = []
-        return results
+        pass
 
     def replace(self, text: str, repl: t.Union[str, t.Callable[[re.Match[str]], str]]) -> str:
         """Replace parts of text that match the regular expression."""
-        count = 0 if self._global else 1
-        return self.pattern.sub(repl, text, count=count)
+        pass
 
 
 HTML_ESCAPES = {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;", "`": "&#96;"}
@@ -308,8 +299,7 @@ def camel_case(text: t.Any) -> str:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    text = "".join(word.title() for word in compounder(text))
-    return text[:1].lower() + text[1:]
+    pass
 
 
 def capitalize(text: t.Any, strict: bool = True) -> str:
@@ -335,8 +325,7 @@ def capitalize(text: t.Any, strict: bool = True) -> str:
     .. versionchanged:: 3.0.0
         Added `strict` option.
     """
-    text = pyd.to_string(text)
-    return text.capitalize() if strict else text[:1].upper() + text[1:]
+    pass
 
 
 def chars(text: t.Any) -> t.List[str]:
@@ -356,7 +345,7 @@ def chars(text: t.Any) -> t.List[str]:
 
     .. versionadded:: 3.0.0
     """
-    return list(pyd.to_string(text))
+    pass
 
 
 def chop(text: t.Any, step: int) -> t.List[str]:
@@ -377,17 +366,7 @@ def chop(text: t.Any, step: int) -> t.List[str]:
 
     .. versionadded:: 3.0.0
     """
-    if text is None:
-        return []
-
-    text = pyd.to_string(text)
-
-    if step <= 0:
-        chopped = [text]
-    else:
-        chopped = [text[i : i + step] for i in range(0, len(text), step)]
-
-    return chopped
+    pass
 
 
 def chop_right(text: t.Any, step: int) -> t.List[str]:
@@ -408,18 +387,7 @@ def chop_right(text: t.Any, step: int) -> t.List[str]:
 
     .. versionadded:: 3.0.0
     """
-    if text is None:
-        return []
-
-    text = pyd.to_string(text)
-
-    if step <= 0:
-        chopped = [text]
-    else:
-        text_len = len(text)
-        chopped = [text[-(i + step) : text_len - i] for i in range(0, text_len, step)][::-1]
-
-    return chopped
+    pass
 
 
 def clean(text: t.Any) -> str:
@@ -439,8 +407,7 @@ def clean(text: t.Any) -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    return " ".join(pyd.compact(text.split()))
+    pass
 
 
 def count_substr(text: t.Any, subtext: t.Any) -> int:
@@ -461,13 +428,7 @@ def count_substr(text: t.Any, subtext: t.Any) -> int:
 
     .. versionadded:: 3.0.0
     """
-    if text is None or subtext is None:
-        return 0
-
-    text = pyd.to_string(text)
-    subtext = pyd.to_string(subtext)
-
-    return text.count(subtext)
+    pass
 
 
 def deburr(text: t.Any) -> str:
@@ -489,10 +450,7 @@ def deburr(text: t.Any) -> str:
 
     .. versionadded:: 2.0.0
     """
-    text = pyd.to_string(text)
-    return JS_RE_LATIN1.replace(
-        text, lambda match: DEBURRED_LETTERS.get(match.group(), match.group())
-    )
+    pass
 
 
 def decapitalize(text: t.Any) -> str:
@@ -512,8 +470,7 @@ def decapitalize(text: t.Any) -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    return text[:1].lower() + text[1:]
+    pass
 
 
 def ends_with(text: t.Any, target: t.Any, position: t.Union[int, None] = None) -> bool:
@@ -537,13 +494,7 @@ def ends_with(text: t.Any, target: t.Any, position: t.Union[int, None] = None) -
 
     .. versionadded:: 1.1.0
     """
-    target = pyd.to_string(target)
-    text = pyd.to_string(text)
-
-    if position is None:
-        position = len(text)
-
-    return text[:position].endswith(target)
+    pass
 
 
 def ensure_ends_with(text: t.Any, suffix: t.Any) -> str:
@@ -567,11 +518,7 @@ def ensure_ends_with(text: t.Any, suffix: t.Any) -> str:
 
     .. versionadded:: 2.4.0
     """
-    text = pyd.to_string(text)
-    suffix = pyd.to_string(suffix)
-    if text.endswith(suffix):
-        return text
-    return f"{text}{suffix}"
+    pass
 
 
 def ensure_starts_with(text: t.Any, prefix: t.Any) -> str:
@@ -596,11 +543,7 @@ def ensure_starts_with(text: t.Any, prefix: t.Any) -> str:
 
     .. versionadded:: 2.4.0
     """
-    text = pyd.to_string(text)
-    prefix = pyd.to_string(prefix)
-    if text.startswith(prefix):
-        return text
-    return f"{prefix}{text}"
+    pass
 
 
 def escape(text: t.Any) -> str:
@@ -624,10 +567,7 @@ def escape(text: t.Any) -> str:
     .. versionchanged:: 1.1.0
         Moved function to :mod:`pydash.strings`.
     """
-    text = pyd.to_string(text)
-    # NOTE: Not using html.escape because Lo-Dash escapes certain chars differently (e.g. `'` isn't
-    # escaped by html.escape() but is by Lo-Dash).
-    return "".join(HTML_ESCAPES.get(char, char) for char in text)
+    pass
 
 
 def escape_reg_exp(text: t.Any) -> str:
@@ -650,8 +590,7 @@ def escape_reg_exp(text: t.Any) -> str:
     .. versionchanged:: 4.0.0
         Removed alias ``escape_re``
     """
-    text = pyd.to_string(text)
-    return re.escape(text)
+    pass
 
 
 def has_substr(text: t.Any, subtext: t.Any) -> bool:
@@ -674,9 +613,7 @@ def has_substr(text: t.Any, subtext: t.Any) -> bool:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    subtext = pyd.to_string(subtext)
-    return text.find(subtext) >= 0
+    pass
 
 
 def human_case(text: t.Any) -> str:
@@ -702,14 +639,7 @@ def human_case(text: t.Any) -> str:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    return (
-        pyd.chain(text)
-        .snake_case()
-        .reg_exp_replace("_id$", "")
-        .replace("_", " ")
-        .capitalize()
-        .value()
-    )
+    pass
 
 
 def insert_substr(text: t.Any, index: int, subtext: t.Any) -> str:
@@ -731,9 +661,7 @@ def insert_substr(text: t.Any, index: int, subtext: t.Any) -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    subtext = pyd.to_string(subtext)
-    return text[:index] + subtext + text[index:]
+    pass
 
 
 def join(array: t.Iterable[t.Any], separator: t.Any = "") -> str:
@@ -761,7 +689,7 @@ def join(array: t.Iterable[t.Any], separator: t.Any = "") -> str:
     .. versionchanged:: 4.0.0
         Removed alias ``implode``.
     """
-    return pyd.to_string(separator).join(pyd.map_(array or (), pyd.to_string))
+    pass
 
 
 def kebab_case(text: t.Any) -> str:
@@ -784,7 +712,7 @@ def kebab_case(text: t.Any) -> str:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    return "-".join(word.lower() for word in compounder(text) if word)
+    pass
 
 
 def lines(text: t.Any) -> t.List[str]:
@@ -804,8 +732,7 @@ def lines(text: t.Any) -> t.List[str]:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    return text.splitlines()
+    pass
 
 
 def lower_case(text: t.Any) -> str:
@@ -832,7 +759,7 @@ def lower_case(text: t.Any) -> str:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    return " ".join(compounder(text)).lower()
+    pass
 
 
 def lower_first(text: str) -> str:
@@ -858,7 +785,7 @@ def lower_first(text: str) -> str:
 
     .. versionadded:: 4.0.0
     """
-    return text[:1].lower() + text[1:]
+    pass
 
 
 def number_format(
@@ -885,24 +812,7 @@ def number_format(
 
     .. versionadded:: 3.0.0
     """
-    # Create a string formatter which converts number to the appropriately scaled representation.
-    fmt = f"{{0:.{scale:d}f}}"
-
-    try:
-        num_parts = fmt.format(number).split(".")
-    except ValueError:
-        text = ""
-    else:
-        int_part = num_parts[0]
-        dec_part = (num_parts + [""])[1]
-
-        # Reverse the integer part, chop it into groups of 3, join on `order_separator`, and then
-        # un-reverse the string.
-        int_part = order_separator.join(chop(int_part[::-1], 3))[::-1]
-
-        text = decimal_separator.join(pyd.compact([int_part, dec_part]))
-
-    return text
+    pass
 
 
 def pad(text: t.Any, length: int, chars: t.Any = " ") -> str:
@@ -933,19 +843,7 @@ def pad(text: t.Any, length: int, chars: t.Any = " ") -> str:
     .. versionchanged:: 3.0.0
         Fix handling of multiple `chars` so that padded string isn't over padded.
     """
-    # pylint: disable=redefined-outer-name
-    text = pyd.to_string(text)
-    text_len = len(text)
-
-    if text_len >= length:
-        return text
-
-    mid = (length - text_len) / 2.0
-    left_len = int(math.floor(mid))
-    right_len = int(math.ceil(mid))
-    chars = pad_end("", right_len, chars)
-
-    return chars[:left_len] + text + chars
+    pass
 
 
 def pad_end(text: t.Any, length: int, chars: t.Any = " ") -> str:
@@ -974,10 +872,7 @@ def pad_end(text: t.Any, length: int, chars: t.Any = " ") -> str:
     .. versionchanged:: 4.0.0
         Renamed from ``pad_right`` to ``pad_end``.
     """
-    # pylint: disable=redefined-outer-name
-    text = pyd.to_string(text)
-    length = max((length, len(text)))
-    return (text + repeat(chars, length))[:length]
+    pass
 
 
 def pad_start(text: t.Any, length: int, chars: t.Any = " ") -> str:
@@ -1006,10 +901,7 @@ def pad_start(text: t.Any, length: int, chars: t.Any = " ") -> str:
     .. versionchanged:: 4.0.0
         Renamed from ``pad_left`` to ``pad_start``.
     """
-    # pylint: disable=redefined-outer-name
-    text = pyd.to_string(text)
-    length = max(length, len(text))
-    return (repeat(chars, length) + text)[-length:]
+    pass
 
 
 def pascal_case(text: t.Any, strict: bool = True) -> str:
@@ -1035,12 +927,7 @@ def pascal_case(text: t.Any, strict: bool = True) -> str:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    text = pyd.to_string(text)
-
-    if strict:
-        text = text.lower()
-
-    return capitalize(camel_case(text), strict=False)
+    pass
 
 
 def predecessor(char: t.Any) -> str:
@@ -1064,8 +951,7 @@ def predecessor(char: t.Any) -> str:
 
     .. versionadded:: 3.0.0
     """
-    char = pyd.to_string(char)
-    return chr(ord(char) - 1)
+    pass
 
 
 def prune(text: t.Any, length: int = 0, omission: str = "...") -> str:
@@ -1096,37 +982,7 @@ def prune(text: t.Any, length: int = 0, omission: str = "...") -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    text_len = len(text)
-    omission_len = len(omission)
-
-    if text_len <= length:
-        return text
-
-    # Replace non-alphanumeric chars with whitespace.
-    def repl(match):
-        char = match.group(0)
-        return " " if char.upper() == char.lower() else char
-
-    subtext = reg_exp_replace(text[: length + 1], r".(?=\W*\w*$)", repl)
-
-    if re.match(r"\w\w", subtext[-2:]):
-        # Last two characters are alphanumeric. Remove last "word" from end of string so that we
-        # prune to the next whole word.
-        subtext = reg_exp_replace(subtext, r"\s*\S+$", "")
-    else:
-        # Last character (at least) is whitespace. So remove that character as well as any other
-        # whitespace.
-        subtext = subtext[:-1].rstrip()
-
-    subtext_len = len(subtext)
-
-    # Only add omission text if doing so will result in a string that is equal to or smaller than
-    # the original.
-    if (subtext_len + omission_len) <= text_len:
-        text = text[:subtext_len] + omission
-
-    return text
+    pass
 
 
 def quote(text: t.Any, quote_char: t.Any = '"') -> str:
@@ -1149,7 +1005,7 @@ def quote(text: t.Any, quote_char: t.Any = '"') -> str:
 
     .. versionadded:: 2.4.0
     """
-    return surround(text, quote_char)
+    pass
 
 
 def reg_exp_js_match(text: t.Any, reg_exp: str) -> t.List[str]:
@@ -1182,8 +1038,7 @@ def reg_exp_js_match(text: t.Any, reg_exp: str) -> t.List[str]:
     .. versionchanged:: 4.0.0
         Renamed from ``js_match`` to ``reg_exp_js_match``.
     """
-    text = pyd.to_string(text)
-    return JSRegExp(reg_exp).find(text)
+    pass
 
 
 def reg_exp_js_replace(
@@ -1219,10 +1074,7 @@ def reg_exp_js_replace(
     .. versionchanged:: 4.0.0
         Renamed from ``js_replace`` to ``reg_exp_js_replace``.
     """
-    text = pyd.to_string(text)
-    if not pyd.is_function(repl):
-        repl = pyd.to_string(repl)
-    return JSRegExp(reg_exp).replace(text, repl)
+    pass
 
 
 def reg_exp_replace(
@@ -1263,10 +1115,7 @@ def reg_exp_replace(
     .. versionchanged:: 4.0.0
         Renamed from ``re_replace`` to ``reg_exp_replace``.
     """
-    if pattern is None:
-        return pyd.to_string(text)
-
-    return replace(text, pattern, repl, ignore_case=ignore_case, count=count, escape=False)
+    pass
 
 
 def repeat(text: t.Any, n: t.SupportsInt = 0) -> str:
@@ -1287,7 +1136,7 @@ def repeat(text: t.Any, n: t.SupportsInt = 0) -> str:
 
     .. versionadded:: 1.1.0
     """
-    return pyd.to_string(text) * int(n)
+    pass
 
 
 def replace(
@@ -1341,33 +1190,7 @@ def replace(
     .. versionchanged:: 5.0.0
         Added support for ``pattern`` as ``typing.Pattern`` object.
     """
-    text = pyd.to_string(text)
-
-    if pattern is None:
-        return text
-
-    if not pyd.is_function(repl):
-        repl = pyd.to_string(repl)
-
-    flags = re.IGNORECASE if ignore_case else 0
-
-    if isinstance(pattern, typing.Pattern):
-        pat = pattern
-    else:
-        pattern = pyd.to_string(pattern)
-
-        if escape:
-            pattern = re.escape(pattern)
-
-        if from_start and not pattern.startswith("^"):
-            pattern = "^" + pattern
-
-        if from_end and not pattern.endswith("$"):
-            pattern += "$"
-
-        pat = re.compile(pattern, flags=flags)
-
-    return pat.sub(repl, text, count=count)
+    pass
 
 
 def replace_end(
@@ -1402,7 +1225,7 @@ def replace_end(
 
     .. versionadded:: 4.1.0
     """
-    return replace(text, pattern, repl, ignore_case=ignore_case, escape=escape, from_end=True)
+    pass
 
 
 def replace_start(
@@ -1437,7 +1260,7 @@ def replace_start(
 
     .. versionadded:: 4.1.0
     """
-    return replace(text, pattern, repl, ignore_case=ignore_case, escape=escape, from_start=True)
+    pass
 
 
 def separator_case(text: t.Any, separator: str) -> str:
@@ -1461,7 +1284,7 @@ def separator_case(text: t.Any, separator: str) -> str:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    return separator.join(word.lower() for word in words(text) if word)
+    pass
 
 
 def series_phrase(
@@ -1495,19 +1318,7 @@ def series_phrase(
 
     .. versionadded:: 3.0.0
     """
-    items = pyd.chain(items).map(pyd.to_string).compact().value()
-    item_count = len(items)
-
-    separator = pyd.to_string(separator)
-    last_separator = pyd.to_string(last_separator)
-
-    if item_count > 2 and serial:
-        last_separator = separator.rstrip() + last_separator
-
-    if item_count >= 2:
-        items = items[:-2] + [last_separator.join(items[-2:])]
-
-    return separator.join(items)
+    pass
 
 
 def series_phrase_serial(
@@ -1532,7 +1343,7 @@ def series_phrase_serial(
 
     .. versionadded:: 3.0.0
     """
-    return series_phrase(items, separator, last_separator, serial=True)
+    pass
 
 
 def slugify(text: t.Any, separator: str = "-") -> str:
@@ -1565,14 +1376,7 @@ def slugify(text: t.Any, separator: str = "-") -> str:
     .. versionchanged:: 7.0.0
         Remove single quotes from output.
     """
-    normalized = (
-        unicodedata.normalize("NFKD", pyd.to_string(text))
-        .encode("ascii", "ignore")
-        .decode("utf8")
-        .replace("'", "")
-    )
-
-    return separator_case(normalized, separator)
+    pass
 
 
 def snake_case(text: t.Any) -> str:
@@ -1598,7 +1402,7 @@ def snake_case(text: t.Any) -> str:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    return "_".join(word.lower() for word in compounder(text) if word)
+    pass
 
 
 def split(text: t.Any, separator: t.Union[str, Unset, None] = UNSET) -> t.List[str]:
@@ -1628,16 +1432,7 @@ def split(text: t.Any, separator: t.Union[str, Unset, None] = UNSET) -> t.List[s
     .. versionchanged:: 4.0.0
         Removed alias ``explode``.
     """
-    text = pyd.to_string(text)
-
-    if separator is UNSET:
-        ret = text.split()
-    elif separator:
-        ret = text.split(separator)
-    else:
-        ret = chars(text)
-
-    return ret
+    pass
 
 
 def start_case(text: t.Any) -> str:
@@ -1660,7 +1455,7 @@ def start_case(text: t.Any) -> str:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    return " ".join(capitalize(word, strict=False) for word in compounder(text))
+    pass
 
 
 def starts_with(text: t.Any, target: t.Any, position: int = 0) -> bool:
@@ -1686,9 +1481,7 @@ def starts_with(text: t.Any, target: t.Any, position: int = 0) -> bool:
 
     .. versionadded:: 1.1.0
     """
-    text = pyd.to_string(text)
-    target = pyd.to_string(target)
-    return text[position:].startswith(target)
+    pass
 
 
 def strip_tags(text: t.Any) -> str:
@@ -1708,7 +1501,7 @@ def strip_tags(text: t.Any) -> str:
 
     .. versionadded:: 3.0.0
     """
-    return RE_HTML_TAGS.sub("", pyd.to_string(text))
+    pass
 
 
 def substr_left(text: t.Any, subtext: str) -> str:
@@ -1730,8 +1523,7 @@ def substr_left(text: t.Any, subtext: str) -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    return text.partition(subtext)[0] if subtext else text
+    pass
 
 
 def substr_left_end(text: t.Any, subtext: str) -> str:
@@ -1753,8 +1545,7 @@ def substr_left_end(text: t.Any, subtext: str) -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    return text.rpartition(subtext)[0] or text if subtext else text
+    pass
 
 
 def substr_right(text: t.Any, subtext: str) -> str:
@@ -1776,8 +1567,7 @@ def substr_right(text: t.Any, subtext: str) -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    return text.partition(subtext)[2] or text if subtext else text
+    pass
 
 
 def substr_right_end(text: t.Any, subtext: str) -> str:
@@ -1799,8 +1589,7 @@ def substr_right_end(text: t.Any, subtext: str) -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    return text.rpartition(subtext)[2] if subtext else text
+    pass
 
 
 def successor(char: t.Any) -> str:
@@ -1824,8 +1613,7 @@ def successor(char: t.Any) -> str:
 
     .. versionadded:: 3.0.0
     """
-    char = pyd.to_string(char)
-    return chr(ord(char) + 1)
+    pass
 
 
 def surround(text: t.Any, wrapper: t.Any) -> str:
@@ -1848,9 +1636,7 @@ def surround(text: t.Any, wrapper: t.Any) -> str:
 
     .. versionadded:: 2.4.0
     """
-    text = pyd.to_string(text)
-    wrapper = pyd.to_string(wrapper)
-    return f"{wrapper}{text}{wrapper}"
+    pass
 
 
 def swap_case(text: t.Any) -> str:
@@ -1870,8 +1656,7 @@ def swap_case(text: t.Any) -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    return text.swapcase()
+    pass
 
 
 def title_case(text: t.Any) -> str:
@@ -1891,9 +1676,7 @@ def title_case(text: t.Any) -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    # NOTE: Can't use text.title() since it doesn't handle apostrophes.
-    return " ".join(word.capitalize() for word in re.split(" ", text))
+    pass
 
 
 def to_lower(text: t.Any) -> str:
@@ -1917,7 +1700,7 @@ def to_lower(text: t.Any) -> str:
 
     .. versionadded:: 4.0.0
     """
-    return pyd.to_string(text).lower()
+    pass
 
 
 def to_upper(text: t.Any) -> str:
@@ -1941,7 +1724,7 @@ def to_upper(text: t.Any) -> str:
 
     .. versionadded:: 4.0.0
     """
-    return pyd.to_string(text).upper()
+    pass
 
 
 def trim(text: t.Any, chars: t.Union[str, None] = None) -> str:
@@ -1962,9 +1745,7 @@ def trim(text: t.Any, chars: t.Union[str, None] = None) -> str:
 
     .. versionadded:: 1.1.0
     """
-    # pylint: disable=redefined-outer-name
-    text = pyd.to_string(text)
-    return text.strip(chars)
+    pass
 
 
 def trim_end(text: t.Any, chars: t.Union[str, None] = None) -> str:
@@ -1988,8 +1769,7 @@ def trim_end(text: t.Any, chars: t.Union[str, None] = None) -> str:
     .. versionchanged:: 4.0.0
         Renamed from ``trim_right`` to ``trim_end``.
     """
-    text = pyd.to_string(text)
-    return text.rstrip(chars)
+    pass
 
 
 def trim_start(text: t.Any, chars: t.Union[str, None] = None) -> str:
@@ -2013,8 +1793,7 @@ def trim_start(text: t.Any, chars: t.Union[str, None] = None) -> str:
     .. versionchanged:: 4.0.0
         Renamed from ``trim_left`` to ``trim_start``.
     """
-    text = pyd.to_string(text)
-    return text.lstrip(chars)
+    pass
 
 
 def truncate(
@@ -2052,28 +1831,7 @@ def truncate(
     .. versionchanged:: 4.0.0
         Removed alias ``trunc``.
     """
-    text = pyd.to_string(text)
-
-    if len(text) <= length:
-        return text
-
-    omission_len = len(omission)
-    text_len = length - omission_len
-    text = text[:text_len]
-
-    trunc_len = len(text)
-
-    if pyd.is_string(separator):
-        trunc_len = text.rfind(separator)
-    elif pyd.is_reg_exp(separator):
-        last = None
-        for match in separator.finditer(text):
-            last = match
-
-        if last is not None:
-            trunc_len = last.start()
-
-    return text[:trunc_len] + omission
+    pass
 
 
 def unescape(text: t.Any) -> str:
@@ -2098,8 +1856,7 @@ def unescape(text: t.Any) -> str:
     .. versionchanged:: 1.1.0
         Moved to :mod:`pydash.strings`.
     """
-    text = pyd.to_string(text)
-    return html.unescape(text)
+    pass
 
 
 def upper_case(text: t.Any) -> str:
@@ -2126,7 +1883,7 @@ def upper_case(text: t.Any) -> str:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    return " ".join(compounder(text)).upper()
+    pass
 
 
 def upper_first(text: str) -> str:
@@ -2152,7 +1909,7 @@ def upper_first(text: str) -> str:
 
     .. versionadded:: 4.0.0
     """
-    return text[:1].upper() + text[1:]
+    pass
 
 
 def unquote(text: t.Any, quote_char: t.Any = '"') -> str:
@@ -2179,13 +1936,7 @@ def unquote(text: t.Any, quote_char: t.Any = '"') -> str:
 
     .. versionadded:: 3.0.0
     """
-    text = pyd.to_string(text)
-    inner = text[1:-1]
-
-    if text == f"{quote_char}{inner}{quote_char}":
-        text = inner
-
-    return text
+    pass
 
 
 def url(*paths: t.Any, **params: t.Any) -> str:
@@ -2213,22 +1964,7 @@ def url(*paths: t.Any, **params: t.Any) -> str:
 
     .. versionadded:: 2.2.0
     """
-    # allow reassignment different type
-    paths = pyd.chain(paths).flatten_deep().map(pyd.to_string).value()  # type: ignore
-    paths_list = []
-    params_list = flatten_url_params(params)
-
-    for path in paths:
-        scheme, netloc, path, query, fragment = urlsplit(path)
-        query = parse_qsl(query)
-        params_list += query
-        paths_list.append(urlunsplit((scheme, netloc, path, "", fragment)))
-
-    path = delimitedpathjoin("/", *paths_list)
-    scheme, netloc, path, query, fragment = urlsplit(path)
-    query = urlencode(params_list)
-
-    return urlunsplit((scheme, netloc, path, query, fragment))
+    pass
 
 
 def words(text: t.Any, pattern: t.Union[str, None] = None) -> t.List[str]:
@@ -2263,15 +1999,7 @@ def words(text: t.Any, pattern: t.Union[str, None] = None) -> t.List[str]:
     .. versionchanged:: 5.0.0
         Improved unicode word support.
     """
-    text = pyd.to_string(text)
-    if pattern is None:
-        if has_unicode_word(text):
-            reg_exp = JS_RE_UNICODE_WORDS
-        else:
-            reg_exp = JS_RE_ASCII_WORDS
-    else:
-        reg_exp = JSRegExp(pattern)
-    return reg_exp.find(text)
+    pass
 
 
 #
@@ -2288,7 +2016,7 @@ def compounder(text):
     References:
         https://github.com/lodash/lodash/blob/4.17.15/lodash.js#L4968
     """
-    return words(deburr(RE_APOS.sub("", pyd.to_string(text))))
+    pass
 
 
 def has_unicode_word(text):
@@ -2298,8 +2026,7 @@ def has_unicode_word(text):
     References:
         https://github.com/lodash/lodash/blob/master/words.js#L3
     """
-    result = RE_HAS_UNICODE_WORD.search(text)
-    return bool(result)
+    pass
 
 
 def delimitedpathjoin(delimiter, *paths):
@@ -2320,19 +2047,7 @@ def delimitedpathjoin(delimiter, *paths):
     >>> assert delimitedpathjoin(".", ".", "a", "b", "c", 1, ".") == ret
     >>> assert delimitedpathjoin(".", []) == ""
     """
-    paths = [pyd.to_string(path) for path in pyd.flatten_deep(paths) if path]
-
-    if len(paths) == 1:
-        # Special case where there's no need to join anything. Doing this because if
-        # path==[delimiter], then an extra delimiter would be added if the else clause ran instead.
-        path = paths[0]
-    else:
-        leading = delimiter if paths and paths[0].startswith(delimiter) else ""
-        trailing = delimiter if paths and paths[-1].endswith(delimiter) else ""
-        middle = delimiter.join([path.strip(delimiter) for path in paths if path.strip(delimiter)])
-        path = "".join([leading, middle, trailing])
-
-    return path
+    pass
 
 
 def flatten_url_params(
@@ -2350,14 +2065,4 @@ def flatten_url_params(
     >>> params = {"a": [1, 2, 3]}
     >>> assert flatten_url_params(params) == [("a", 1), ("a", 2), ("a", 3)]
     """
-    if isinstance(params, dict):
-        params = list(params.items())
-
-    flattened: t.List[t.Any] = []
-    for param, value in params:
-        if isinstance(value, (list, tuple)):
-            flattened += zip([param] * len(value), value)
-        else:
-            flattened.append((param, value))
-
-    return flattened
+    pass

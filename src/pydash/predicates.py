@@ -122,7 +122,7 @@ def eq(value: t.Any, other: t.Any) -> bool:
 
     .. versionadded:: 4.0.0
     """
-    return value is other
+    pass
 
 
 def eq_cmp(other: T) -> t.Callable[[T], bool]:
@@ -148,7 +148,7 @@ def eq_cmp(other: T) -> t.Callable[[T], bool]:
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: eq(value, other)
+    pass
 
 
 def gt(value: "SupportsDunderGT[T]", other: T) -> bool:
@@ -173,7 +173,7 @@ def gt(value: "SupportsDunderGT[T]", other: T) -> bool:
 
     .. versionadded:: 3.3.0
     """
-    return bool(value > other)
+    pass
 
 
 def gt_cmp(other: T) -> t.Callable[["SupportsDunderGT[T]"], bool]:
@@ -197,7 +197,7 @@ def gt_cmp(other: T) -> t.Callable[["SupportsDunderGT[T]"], bool]:
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: gt(value, other)
+    pass
 
 
 def gte(value: "SupportsDunderGE[T]", other: T) -> bool:
@@ -222,7 +222,7 @@ def gte(value: "SupportsDunderGE[T]", other: T) -> bool:
 
     .. versionadded:: 3.3.0
     """
-    return bool(value >= other)
+    pass
 
 
 def gte_cmp(other: T) -> t.Callable[["SupportsDunderGE[T]"], bool]:
@@ -246,7 +246,7 @@ def gte_cmp(other: T) -> t.Callable[["SupportsDunderGE[T]"], bool]:
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: gte(value, other)
+    pass
 
 
 def lt(value: "SupportsDunderLT[T]", other: T) -> bool:
@@ -271,7 +271,7 @@ def lt(value: "SupportsDunderLT[T]", other: T) -> bool:
 
     .. versionadded:: 3.3.0
     """
-    return bool(value < other)
+    pass
 
 
 def lt_cmp(other: T) -> t.Callable[["SupportsDunderLT[T]"], bool]:
@@ -295,7 +295,7 @@ def lt_cmp(other: T) -> t.Callable[["SupportsDunderLT[T]"], bool]:
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: lt(value, other)
+    pass
 
 
 def lte(value: "SupportsDunderLE[T]", other: T) -> bool:
@@ -320,7 +320,7 @@ def lte(value: "SupportsDunderLE[T]", other: T) -> bool:
 
     .. versionadded:: 3.3.0
     """
-    return bool(value <= other)
+    pass
 
 
 def lte_cmp(other: T) -> t.Callable[["SupportsDunderLE[T]"], bool]:
@@ -344,7 +344,7 @@ def lte_cmp(other: T) -> t.Callable[["SupportsDunderLE[T]"], bool]:
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: lte(value, other)
+    pass
 
 
 def in_range(value: t.Any, start: t.Any = 0, end: t.Any = None) -> bool:
@@ -378,19 +378,7 @@ def in_range(value: t.Any, start: t.Any = 0, end: t.Any = None) -> bool:
 
     .. versionadded:: 3.1.0
     """
-    if not is_number(value):
-        return False
-
-    if not is_number(start):
-        start = 0
-
-    if end is None:
-        end = start
-        start = 0
-    elif not is_number(end):
-        end = 0
-
-    return start <= value < end
+    pass
 
 
 def in_range_cmp(start: t.Any = 0, end: t.Any = None) -> t.Callable[[t.Any], bool]:
@@ -421,7 +409,7 @@ def in_range_cmp(start: t.Any = 0, end: t.Any = None) -> t.Callable[[t.Any], boo
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: in_range(value, start, end)
+    pass
 
 
 def is_associative(value: t.Any) -> bool:
@@ -447,7 +435,7 @@ def is_associative(value: t.Any) -> bool:
 
     .. versionadded:: 2.0.0
     """
-    return hasattr(value, "__getitem__")
+    pass
 
 
 def is_blank(text: t.Any) -> TypeGuard[str]:
@@ -471,12 +459,7 @@ def is_blank(text: t.Any) -> TypeGuard[str]:
 
     .. versionadded:: 3.0.0
     """
-    try:
-        ret = bool(re.match(r"^(\s+)?$", text))
-    except TypeError:
-        ret = False
-
-    return ret
+    pass
 
 
 def is_boolean(value: t.Any) -> TypeGuard[bool]:
@@ -506,7 +489,7 @@ def is_boolean(value: t.Any) -> TypeGuard[bool]:
     .. versionchanged:: 4.0.0
         Removed alias ``is_bool``.
     """
-    return isinstance(value, bool)
+    pass
 
 
 def is_builtin(value: t.Any) -> bool:
@@ -533,10 +516,7 @@ def is_builtin(value: t.Any) -> bool:
     .. versionchanged:: 4.0.0
         Removed alias ``is_native``.
     """
-    try:
-        return isinstance(value, BuiltinFunctionType) or value in BUILTINS
-    except TypeError:  # pragma: no cover
-        return False
+    pass
 
 
 def is_date(value: t.Any) -> bool:
@@ -564,7 +544,7 @@ def is_date(value: t.Any) -> bool:
 
     .. versionadded:: 1.0.0
     """
-    return isinstance(value, datetime.date)
+    pass
 
 
 def is_decreasing(
@@ -590,7 +570,7 @@ def is_decreasing(
 
     .. versionadded:: 2.0.0
     """
-    return is_monotone(value, operator.ge)  # type: ignore
+    pass
 
 
 def is_dict(value: t.Any) -> bool:
@@ -618,7 +598,7 @@ def is_dict(value: t.Any) -> bool:
     .. versionchanged:: 4.0.0
         Removed alias ``is_plain_object``.
     """
-    return isinstance(value, dict)
+    pass
 
 
 def is_empty(value: t.Any) -> bool:
@@ -651,7 +631,7 @@ def is_empty(value: t.Any) -> bool:
 
     .. versionadded:: 1.0.0
     """
-    return is_boolean(value) or is_number(value) or not value
+    pass
 
 
 def is_equal(value: t.Any, other: t.Any) -> bool:
@@ -678,7 +658,7 @@ def is_equal(value: t.Any, other: t.Any) -> bool:
         Removed :attr:`iteratee` from :func:`is_equal` and added it in
         :func:`is_equal_with`.
     """
-    return is_equal_with(value, other, customizer=None)
+    pass
 
 
 def is_equal_cmp(other: T) -> t.Callable[[T], bool]:
@@ -700,19 +680,19 @@ def is_equal_cmp(other: T) -> t.Callable[[T], bool]:
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: is_equal(value, other)
+    pass
 
 
 @t.overload
-def is_equal_with(value: T, other: T2, customizer: t.Callable[[T, T2], T3]) -> T3: ...
+def is_equal_with(value: T, other: T2, customizer: t.Callable[[T, T2], T3]) -> T3: pass
 
 
 @t.overload
-def is_equal_with(value: t.Any, other: t.Any, customizer: t.Callable[..., t.Any]) -> bool: ...
+def is_equal_with(value: t.Any, other: t.Any, customizer: t.Callable[..., t.Any]) -> bool: pass
 
 
 @t.overload
-def is_equal_with(value: t.Any, other: t.Any, customizer: None) -> bool: ...
+def is_equal_with(value: t.Any, other: t.Any, customizer: None) -> bool: pass
 
 
 def is_equal_with(value, other, customizer):
@@ -741,33 +721,7 @@ def is_equal_with(value, other, customizer):
 
     .. versionadded:: 4.0.0
     """
-    # If customizer provided, use it for comparison.
-    equal = customizer(value, other) if callable(customizer) else None
-
-    # Return customizer results if anything but None.
-    if equal is not None:
-        pass
-    elif (
-        callable(customizer)
-        and type(value) is type(other)
-        and isinstance(value, (list, dict))
-        and isinstance(other, (list, dict))
-        and len(value) == len(other)
-    ):
-        # Walk a/b to determine equality using customizer.
-        for key, val in iterator(value):
-            if pyd.has(other, key):
-                equal = is_equal_with(val, other[key], customizer)
-            else:
-                equal = False
-
-            if not equal:
-                break
-    else:
-        # Use basic == comparison.
-        equal = value == other
-
-    return equal
+    pass
 
 
 def is_equal_with_cmp(other: T, customizer: t.Callable[[T, T], T3]) -> t.Callable[[T], T3]:
@@ -792,7 +746,7 @@ def is_equal_with_cmp(other: T, customizer: t.Callable[[T, T], T3]) -> t.Callabl
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: is_equal_with(value, other, customizer)
+    pass
 
 
 def is_error(value: t.Any) -> bool:
@@ -816,7 +770,7 @@ def is_error(value: t.Any) -> bool:
 
     .. versionadded:: 1.1.0
     """
-    return isinstance(value, Exception)
+    pass
 
 
 def is_even(value: t.Any) -> bool:
@@ -840,7 +794,7 @@ def is_even(value: t.Any) -> bool:
 
     .. versionadded:: 2.0.0
     """
-    return is_number(value) and value % 2 == 0
+    pass
 
 
 def is_float(value: t.Any) -> TypeGuard[float]:
@@ -862,7 +816,7 @@ def is_float(value: t.Any) -> TypeGuard[float]:
 
     .. versionadded:: 2.0.0
     """
-    return isinstance(value, float)
+    pass
 
 
 def is_function(value: t.Any) -> bool:
@@ -886,7 +840,7 @@ def is_function(value: t.Any) -> bool:
 
     .. versionadded:: 1.0.0
     """
-    return callable(value)
+    pass
 
 
 def is_increasing(
@@ -914,7 +868,7 @@ def is_increasing(
 
     .. versionadded:: 2.0.0
     """
-    return is_monotone(value, operator.le)  # type: ignore
+    pass
 
 
 def is_indexed(value: t.Any) -> bool:
@@ -943,7 +897,7 @@ def is_indexed(value: t.Any) -> bool:
     .. versionchanged:: 3.0.0
         Return ``True`` for tuples.
     """
-    return isinstance(value, (list, tuple, str))
+    pass
 
 
 def is_instance_of(value: t.Any, types: t.Union[type, t.Tuple[type, ...]]) -> bool:
@@ -967,7 +921,7 @@ def is_instance_of(value: t.Any, types: t.Union[type, t.Tuple[type, ...]]) -> bo
 
     .. versionadded:: 2.0.0
     """
-    return isinstance(value, types)
+    pass
 
 
 def is_instance_of_cmp(
@@ -992,7 +946,7 @@ def is_instance_of_cmp(
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: is_instance_of(value, types)
+    pass
 
 
 def is_integer(value: t.Any) -> TypeGuard[int]:
@@ -1022,7 +976,7 @@ def is_integer(value: t.Any) -> TypeGuard[int]:
     .. versionchanged:: 4.0.0
         Removed alias ``is_int``.
     """
-    return is_number(value) and isinstance(value, int)
+    pass
 
 
 def is_iterable(value: t.Any) -> bool:
@@ -1050,12 +1004,7 @@ def is_iterable(value: t.Any) -> bool:
 
     .. versionadded:: 3.3.0
     """
-    try:
-        iter(value)
-    except TypeError:
-        return False
-    else:
-        return True
+    pass
 
 
 def is_json(value: t.Any) -> bool:
@@ -1081,11 +1030,7 @@ def is_json(value: t.Any) -> bool:
 
     .. versionadded:: 2.0.0
     """
-    try:
-        json.loads(value)
-        return True
-    except Exception:
-        return False
+    pass
 
 
 def is_list(value: t.Any) -> bool:
@@ -1109,7 +1054,7 @@ def is_list(value: t.Any) -> bool:
 
     .. versionadded:: 1.0.0
     """
-    return isinstance(value, list)
+    pass
 
 
 def is_match(obj: t.Any, source: t.Any) -> bool:
@@ -1143,7 +1088,7 @@ def is_match(obj: t.Any, source: t.Any) -> bool:
     .. versionchanged:: 4.0.0
         Move `iteratee` argument to :func:`is_match_with`.
     """
-    return is_match_with(obj, source)
+    pass
 
 
 def is_match_cmp(source: t.Any) -> t.Callable[[t.Any], bool]:
@@ -1167,7 +1112,7 @@ def is_match_cmp(source: t.Any) -> t.Callable[[t.Any], bool]:
 
     .. versionadded:: 7.1.0
     """
-    return lambda obj: is_match(obj, source)
+    pass
 
 
 def is_match_with(
@@ -1203,41 +1148,7 @@ def is_match_with(
 
     .. versionadded:: 4.0.0
     """
-    if _obj is UNSET:
-        _obj = obj
-
-    if _source is UNSET:
-        _source = source
-
-    if not callable(customizer):
-
-        def cbk(obj_value, src_value):
-            return obj_value == src_value
-
-        # no attribute `_argcount`
-        cbk._argcount = 2  # type: ignore
-    else:
-        cbk = customizer
-
-    if isinstance(source, (Mapping, Iterable)) and not isinstance(source, str):
-        # Set equal to True if source is empty, otherwise, False and then allow deep comparison to
-        # determine equality.
-        equal = not source
-
-        # Walk a/b to determine equality.
-        for key, value in iterator(source):
-            try:
-                obj_value = base_get(obj, key)
-                equal = is_match_with(obj_value, value, cbk, _key=key, _obj=_obj, _source=_source)
-            except Exception:
-                equal = False
-
-            if not equal:
-                break
-    else:
-        equal = callit(cbk, obj, source, _key, _obj, _source)
-
-    return equal
+    pass
 
 
 def is_match_with_cmp(source: t.Any, customizer: t.Any = None) -> t.Callable[[t.Any], bool]:
@@ -1262,7 +1173,7 @@ def is_match_with_cmp(source: t.Any, customizer: t.Any = None) -> t.Callable[[t.
 
     .. versionadded:: 7.1.0
     """
-    return lambda obj: is_match_with(obj, source, customizer)
+    pass
 
 
 def is_monotone(value: t.Union[T, t.List[T]], op: t.Callable[[T, T], t.Any]) -> bool:
@@ -1285,18 +1196,7 @@ def is_monotone(value: t.Union[T, t.List[T]], op: t.Callable[[T, T], t.Any]) -> 
 
     .. versionadded:: 2.0.0
     """
-    if not is_list(value):
-        l_value = [value]
-    else:
-        l_value = value  # type: ignore
-
-    search = (
-        False
-        for x, y in zip(l_value, islice(l_value, 1, None))
-        if not op(x, y)  # type: ignore
-    )
-
-    return next(search, True)
+    pass
 
 
 def is_monotone_cmp(
@@ -1320,7 +1220,7 @@ def is_monotone_cmp(
 
     .. versionadded:: 7.1.0
     """
-    return lambda value: is_monotone(value, op)
+    pass
 
 
 def is_nan(value: t.Any) -> bool:
@@ -1344,7 +1244,7 @@ def is_nan(value: t.Any) -> bool:
 
     .. versionadded:: 1.0.0
     """
-    return not is_number(value)
+    pass
 
 
 def is_negative(value: t.Any) -> bool:
@@ -1368,7 +1268,7 @@ def is_negative(value: t.Any) -> bool:
 
     .. versionadded:: 2.0.0
     """
-    return is_number(value) and value < 0
+    pass
 
 
 def is_none(value: t.Any) -> TypeGuard[None]:
@@ -1390,7 +1290,7 @@ def is_none(value: t.Any) -> TypeGuard[None]:
 
     .. versionadded:: 1.0.0
     """
-    return value is None
+    pass
 
 
 def is_number(value: t.Any) -> bool:
@@ -1424,7 +1324,7 @@ def is_number(value: t.Any) -> bool:
     .. versionchanged:: 4.0.0
         Removed alias ``is_num``.
     """
-    return not is_boolean(value) and isinstance(value, NUMBER_TYPES)
+    pass
 
 
 def is_object(value: t.Any) -> bool:
@@ -1450,7 +1350,7 @@ def is_object(value: t.Any) -> bool:
 
     .. versionadded:: 1.0.0
     """
-    return isinstance(value, (list, dict))
+    pass
 
 
 def is_odd(value: t.Any) -> bool:
@@ -1474,7 +1374,7 @@ def is_odd(value: t.Any) -> bool:
 
     .. versionadded:: 2.0.0
     """
-    return is_number(value) and value % 2 != 0
+    pass
 
 
 def is_positive(value: t.Any) -> bool:
@@ -1498,7 +1398,7 @@ def is_positive(value: t.Any) -> bool:
 
     .. versionadded:: 2.0.0
     """
-    return is_number(value) and value > 0
+    pass
 
 
 def is_reg_exp(value: t.Any) -> TypeGuard[re.Pattern[t.Any]]:
@@ -1523,7 +1423,7 @@ def is_reg_exp(value: t.Any) -> TypeGuard[re.Pattern[t.Any]]:
     .. versionchanged:: 4.0.0
         Removed alias ``is_re``.
     """
-    return isinstance(value, RegExp)
+    pass
 
 
 def is_set(value: t.Any) -> bool:
@@ -1545,7 +1445,7 @@ def is_set(value: t.Any) -> bool:
 
     .. versionadded:: 4.0.0
     """
-    return isinstance(value, set)
+    pass
 
 
 def is_strictly_decreasing(
@@ -1569,7 +1469,7 @@ def is_strictly_decreasing(
 
     .. versionadded:: 2.0.0
     """
-    return is_monotone(value, operator.gt)  # type: ignore
+    pass
 
 
 def is_strictly_increasing(
@@ -1593,7 +1493,7 @@ def is_strictly_increasing(
 
     .. versionadded:: 2.0.0
     """
-    return is_monotone(value, operator.lt)  # type: ignore
+    pass
 
 
 def is_string(value: t.Any) -> TypeGuard[str]:
@@ -1615,7 +1515,7 @@ def is_string(value: t.Any) -> TypeGuard[str]:
 
     .. versionadded:: 1.0.0
     """
-    return isinstance(value, str)
+    pass
 
 
 def is_tuple(value: t.Any) -> bool:
@@ -1639,7 +1539,7 @@ def is_tuple(value: t.Any) -> bool:
 
     .. versionadded:: 3.0.0
     """
-    return isinstance(value, tuple)
+    pass
 
 
 def is_zero(value: t.Any) -> TypeGuard[int]:
@@ -1661,4 +1561,4 @@ def is_zero(value: t.Any) -> TypeGuard[int]:
 
     .. versionadded:: 2.0.0
     """
-    return value == 0 and is_integer(value)
+    pass
